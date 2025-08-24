@@ -1,4 +1,5 @@
 ﻿using bookingEvent.Data;
+using bookingEvent.Services;
 using bookingEvent.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddEndpointsApiExplorer();
+// Đăng ký service
+builder.Services.AddScoped<AccountGroupServices>();
+builder.Services.AddScoped<AccountGroupPermissionServices>();
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -89,6 +94,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAngular");
 
 // Authentication & Authorization
 app.UseAuthentication();

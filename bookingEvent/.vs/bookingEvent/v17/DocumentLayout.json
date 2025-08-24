@@ -3,28 +3,68 @@
   "WorkspaceRootPath": "D:\\bookingEventBack\\bookingEvent\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\accountgrouppermissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\accountgrouppermissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\model\\accountgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:model\\accountgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\bookingevent.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:bookingevent.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\model\\accountgrouppermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:model\\accountgrouppermissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\accountgroupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\accountgroupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\services\\accountgroupservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:services\\accountgroupservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\services\\accountgrouppermissionservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:services\\accountgrouppermissionservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\migrations\\20250822044324_accountpermission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:migrations\\20250822044324_accountpermission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\services\\auth\\authsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:services\\auth\\authsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:services\\auth\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\bookingevent.csproj.backup.tmp||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -33,18 +73,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\bookingevent.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:bookingevent.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:model\\nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|d:\\bookingeventback\\bookingevent\\bookingevent.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{59D0CB7C-A001-41E6-B217-FDC1C20D905B}|bookingEvent.csproj|solutionrelative:bookingevent.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -95,128 +123,20 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "NguoidungController.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\NguoidungController.cs",
-              "RelativeDocumentMoniker": "Controllers\\NguoidungController.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\NguoidungController.cs",
-              "RelativeToolTip": "Controllers\\NguoidungController.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Title": "AccountGroup.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Model\\AccountGroup.cs",
+              "RelativeDocumentMoniker": "Model\\AccountGroup.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Model\\AccountGroup.cs",
+              "RelativeToolTip": "Model\\AccountGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:12:48.174Z",
+              "WhenOpened": "2025-08-22T02:52:10.718Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-21T04:33:37.985Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AuthSettings.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthSettings.cs",
-              "RelativeDocumentMoniker": "Services\\Auth\\AuthSettings.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthSettings.cs",
-              "RelativeToolTip": "Services\\Auth\\AuthSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:36:35.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABgAAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:48:27.331Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthService.cs",
-              "RelativeDocumentMoniker": "Services\\Auth\\AuthService.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthService.cs",
-              "RelativeToolTip": "Services\\Auth\\AuthService.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwBkAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:37:42.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAmwDAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:40:16.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "bookingEvent.http",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.http",
-              "RelativeDocumentMoniker": "bookingEvent.http",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.http",
-              "RelativeToolTip": "bookingEvent.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-08-21T04:38:38.71Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "bookingEvent.csproj.Backup.tmp",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj.Backup.tmp",
-              "RelativeDocumentMoniker": "bookingEvent.csproj.Backup.tmp",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj.Backup.tmp",
-              "RelativeToolTip": "bookingEvent.csproj.Backup.tmp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-08-21T04:40:09.889Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "NguoiDung.cs",
-              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Model\\NguoiDung.cs",
-              "RelativeDocumentMoniker": "Model\\NguoiDung.cs",
-              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Model\\NguoiDung.cs",
-              "RelativeToolTip": "Model\\NguoiDung.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T04:09:22.651Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "bookingEvent",
+              "Title": "bookingEvent.csproj",
               "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj",
               "RelativeDocumentMoniker": "bookingEvent.csproj",
               "ToolTip": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj",
@@ -228,16 +148,201 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountGroupPermissionsController.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AccountGroupPermissionsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountGroupPermissionsController.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AccountGroupPermissionsController.cs",
+              "RelativeToolTip": "Controllers\\AccountGroupPermissionsController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAkAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T04:30:24.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAGEAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:40:16.263Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NguoidungController.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\NguoidungController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NguoidungController.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\NguoidungController.cs",
+              "RelativeToolTip": "Controllers\\NguoidungController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwCsAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:12:48.174Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-21T04:33:37.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AccountGroupPermissions.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Model\\AccountGroupPermissions.cs",
+              "RelativeDocumentMoniker": "Model\\AccountGroupPermissions.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Model\\AccountGroupPermissions.cs",
+              "RelativeToolTip": "Model\\AccountGroupPermissions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T02:55:06.828Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NguoiDung.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Model\\NguoiDung.cs",
+              "RelativeDocumentMoniker": "Model\\NguoiDung.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Model\\NguoiDung.cs",
+              "RelativeToolTip": "Model\\NguoiDung.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:09:22.651Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AccountGroupController.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AccountGroupController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountGroupController.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AccountGroupController.cs",
+              "RelativeToolTip": "Controllers\\AccountGroupController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABsAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T04:54:45.549Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "AccountGroupServices.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\AccountGroupServices.cs",
+              "RelativeDocumentMoniker": "Services\\AccountGroupServices.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\AccountGroupServices.cs",
+              "RelativeToolTip": "Services\\AccountGroupServices.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T04:56:11.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:48:27.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AccountGroupPermissionServices.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\AccountGroupPermissionServices.cs",
+              "RelativeDocumentMoniker": "Services\\AccountGroupPermissionServices.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\AccountGroupPermissionServices.cs",
+              "RelativeToolTip": "Services\\AccountGroupPermissionServices.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwBMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T04:06:25.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20250822044324_AccountPermission.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Migrations\\20250822044324_AccountPermission.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250822044324_AccountPermission.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Migrations\\20250822044324_AccountPermission.cs",
+              "RelativeToolTip": "Migrations\\20250822044324_AccountPermission.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T04:43:25.121Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
               "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T03:49:22.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T03:49:22.052Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AuthSettings.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthSettings.cs",
+              "RelativeDocumentMoniker": "Services\\Auth\\AuthSettings.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthSettings.cs",
+              "RelativeToolTip": "Services\\Auth\\AuthSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:36:35.545Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthService.cs",
+              "RelativeDocumentMoniker": "Services\\Auth\\AuthService.cs",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\Services\\Auth\\AuthService.cs",
+              "RelativeToolTip": "Services\\Auth\\AuthService.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwBkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T04:37:42.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "bookingEvent.http",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.http",
+              "RelativeDocumentMoniker": "bookingEvent.http",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.http",
+              "RelativeToolTip": "bookingEvent.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-08-21T04:38:38.71Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "bookingEvent.csproj.Backup.tmp",
+              "DocumentMoniker": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj.Backup.tmp",
+              "RelativeDocumentMoniker": "bookingEvent.csproj.Backup.tmp",
+              "ToolTip": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj.Backup.tmp",
+              "RelativeToolTip": "bookingEvent.csproj.Backup.tmp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-08-21T04:40:09.889Z"
             }
           ]
         }

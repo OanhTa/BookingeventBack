@@ -1,5 +1,63 @@
 [
   {
+    "ContainingType": "bookingEvent.Controllers.AccountGroupController",
+    "Method": "AddAccountGroup",
+    "RelativePath": "api/AccountGroup/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "models",
+        "Type": "bookingEvent.Model.AccountGroup",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AccountGroupController",
+    "Method": "GetAccountGroup",
+    "RelativePath": "api/AccountGroup/getAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AccountGroupPermissionsController",
+    "Method": "GetGroupPermissions",
+    "RelativePath": "api/AccountGroupPermissions/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AccountGroupPermissionsController",
+    "Method": "AddPermissions",
+    "RelativePath": "api/AccountGroupPermissions/add-multi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "models",
+        "Type": "System.Collections.Generic.List\u00601[[bookingEvent.Model.AccountGroupPermissions, bookingEvent, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",

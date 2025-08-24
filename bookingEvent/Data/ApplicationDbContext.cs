@@ -10,5 +10,8 @@ namespace bookingEvent.Data
 
         }
         public DbSet<NguoiDung> NguoiDung { get; set; }
+        public DbSet<AccountGroup> AccountGroup { get; set; }
+        public DbSet<AccountGroupPermissions> AccountGroupPermissions { get; set; }
+
     }
 }
