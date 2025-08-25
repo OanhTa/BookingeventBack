@@ -8,7 +8,7 @@ namespace bookingEvent.Services.Auth
 {
     public class AuthService
     {
-        public string GenerateToken(NguoiDung user)
+        public string GenerateToken(Account account)
         {
             var handler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(AuthSettings.PrivateKey);
@@ -18,7 +18,7 @@ namespace bookingEvent.Services.Auth
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(user),
+                Subject = GenerateClaims(account),
                 Expires = DateTime.UtcNow.AddMinutes(AuthSettings.AccessTokenExpiryMinutes),
                 SigningCredentials = credentials,
             };
@@ -27,17 +27,24 @@ namespace bookingEvent.Services.Auth
             return handler.WriteToken(token);
         }
 
-        private static ClaimsIdentity GenerateClaims(NguoiDung user)
+        private static ClaimsIdentity GenerateClaims(Account account)
         {
             var claims = new ClaimsIdentity();
-            claims.AddClaim(new Claim(ClaimTypes.Name, user.email));
-            claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.ma.ToString()));
 
-            // Role-based access control
-            if (!string.IsNullOrEmpty(user.vaiTro))
+            // Username hoặc Email
+            claims.AddClaim(new Claim(ClaimTypes.Name, account.Email ?? account.Name));
+
+            // ID
+            claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()));
+
+            // Role từ AccountGroup
+            if (account.AccountGroup != null && !string.IsNullOrEmpty(account.AccountGroup.Name))
             {
-                claims.AddClaim(new Claim(ClaimTypes.Role, user.vaiTro));
+                claims.AddClaim(new Claim(ClaimTypes.Role, account.AccountGroup.Name));
             }
+
+            claims.AddClaim(new Claim("AccountGroupId", account.AccountGroupId.ToString()));
+
 
             return claims;
         }

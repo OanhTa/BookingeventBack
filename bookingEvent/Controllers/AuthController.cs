@@ -21,15 +21,15 @@ namespace bookingEvent.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            var user = _context.NguoiDung
-                .FirstOrDefault(u => u.email == request.Email && u.matKhauHash == request.Password);
+            var account = _context.Account
+                .FirstOrDefault(u => u.Email == request.Email && u.PassHash == request.Password);
 
-            if (user == null)
+            if (account == null)
             {
                 return Unauthorized(new { message = "Sai email hoặc mật khẩu" });
             }
 
-            var token = _authService.GenerateToken(user);
+            var token = _authService.GenerateToken(account);
             return Ok(new { token });
         }
     }

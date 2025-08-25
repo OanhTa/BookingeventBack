@@ -1,4 +1,5 @@
 ﻿using bookingEvent.Data;
+using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +9,12 @@ namespace bookingEvent.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class NguoiDungController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<NguoiDungController> _logger;
+        private readonly ILogger<AccountController> _logger;
 
-        public NguoiDungController(ApplicationDbContext context, ILogger<NguoiDungController> logger)
+        public AccountController(ApplicationDbContext context, ILogger<AccountController> logger)
         {
             _context = context;
             _logger = logger;
@@ -21,16 +22,16 @@ namespace bookingEvent.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<NguoiDung>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Account>>> View()
         {
-            return await _context.NguoiDung.ToListAsync();
+            return await _context.Account.ToListAsync();
         }
 
         // Lấy 1 người dùng theo id
         [HttpGet("{id}")]
-        public async Task<ActionResult<NguoiDung>> GetById(Guid id)
+        public async Task<ActionResult<Account>> GetById(Guid id)
         {
-            var user = await _context.NguoiDung.FindAsync(id);
+            var user = await _context.Account.FindAsync(id);
             if (user == null)
                 return NotFound();
 
@@ -39,20 +40,20 @@ namespace bookingEvent.Controllers
 
         // Thêm mới 1 người dùng
         [HttpPost]
-        public async Task<ActionResult<NguoiDung>> Create(NguoiDung user)
+        public async Task<ActionResult<Account>> Add(Account user)
         {
-            user.ma = Guid.NewGuid();
-            _context.NguoiDung.Add(user);
+            user.Id = Guid.NewGuid();
+            _context.Account.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = user.ma }, user);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
         // Cập nhật 1 người dùng
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, NguoiDung user)
+        public async Task<IActionResult> Edit(Guid id, Account user)
         {
-            if (id != user.ma) return BadRequest();
+            if (id != user.Id) return BadRequest();
 
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -64,10 +65,10 @@ namespace bookingEvent.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var user = await _context.NguoiDung.FindAsync(id);
+            var user = await _context.Account.FindAsync(id);
             if (user == null) return NotFound();
 
-            _context.NguoiDung.Remove(user);
+            _context.Account.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();

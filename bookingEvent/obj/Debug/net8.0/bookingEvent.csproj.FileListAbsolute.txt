@@ -160,10 +160,10 @@ D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.build.json
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.build.json.cache
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.development.json
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingE.E4A3E9E7.Up2Date
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingEvent.dll
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\refint\bookingEvent.dll
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingEvent.pdb
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingEvent.genruntimeconfig.cache
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\ref\bookingEvent.dll
+D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
