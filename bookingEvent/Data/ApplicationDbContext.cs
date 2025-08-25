@@ -9,6 +9,7 @@ namespace bookingEvent.Data
         {
 
         }
+        public DbSet<AuditLog> AuditLog { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountGroup> AccountGroup { get; set; }
         public DbSet<AccountGroupPermissions> AccountGroupPermissions { get; set; }

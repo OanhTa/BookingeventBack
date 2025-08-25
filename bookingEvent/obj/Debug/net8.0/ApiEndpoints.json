@@ -21,7 +21,7 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.AccountController",
-    "Method": "Create",
+    "Method": "Add",
     "RelativePath": "api/Account",
     "HttpMethod": "POST",
     "IsController": true,
@@ -73,7 +73,7 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.AccountController",
-    "Method": "Update",
+    "Method": "Edit",
     "RelativePath": "api/Account/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -103,6 +103,22 @@
       {
         "Name": "id",
         "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AccountController",
+    "Method": "EditToken",
+    "RelativePath": "api/Account/update-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "UpdateTokenRequest",
         "IsRequired": true
       }
     ],
@@ -167,6 +183,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.AuditLogController",
+    "Method": "GetAll",
+    "RelativePath": "api/AuditLog",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuditLogController",
+    "Method": "Create",
+    "RelativePath": "api/AuditLog",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "auditLog",
+        "Type": "bookingEvent.Model.AuditLog",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -177,6 +219,22 @@
       {
         "Name": "request",
         "Type": "bookingEvent.Controllers.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "bookingEvent.Controllers.RegisterRequest",
         "IsRequired": true
       }
     ],

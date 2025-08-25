@@ -1,5 +1,6 @@
 ﻿using bookingEvent.Data;
 using bookingEvent.Infrastructure.Middlewares;
+using bookingEvent.Mapping;
 using bookingEvent.Services;
 using bookingEvent.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,7 +13,6 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -20,8 +20,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddEndpointsApiExplorer();
 // Đăng ký service
+builder.Services.AddScoped<AuditLogService>();
+builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<AccountGroupServices>();
 builder.Services.AddScoped<AccountGroupPermissionServices>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>

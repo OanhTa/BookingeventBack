@@ -1,6 +1,7 @@
 ﻿using bookingEvent.Data;
-using bookingEvent.Infrastructure.Middlewares;
+using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +13,28 @@ namespace bookingEvent.Controllers
     public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly AccountService _service;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ApplicationDbContext context, ILogger<AccountController> logger)
+        public AccountController(AccountService service, ApplicationDbContext context, ILogger<AccountController> logger)
         {
             _context = context;
-            _logger = logger;
+            _service = service;
+           _logger = logger;
+            
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<IEnumerable<Account>>> View()
         {
             return await _context.Account.ToListAsync();
         }
 
+
         // Lấy 1 người dùng theo id
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Account>> GetById(Guid id)
         {
             var user = await _context.Account.FindAsync(id);
@@ -38,8 +44,31 @@ namespace bookingEvent.Controllers
             return user;
         }
 
+        [HttpPost("update-token")]
+        public async Task<IActionResult> EditToken([FromBody] UpdateTokenRequest request)
+        {
+            if (request == null || request.AccountId == Guid.Empty || String.IsNullOrEmpty(request.Token))
+            {
+                return BadRequest("Dữ liệu không hợp lệ");
+            }
+            var result = await _service.UpdateToken(request.AccountId, request.Token);
+            if (!result)
+                return StatusCode(500, "Có lỗi khi cập nhật token");
+
+            var accountDto = await _service.GetAccountDtoAsync(request.AccountId);
+            if (accountDto == null)
+                return NotFound("Không tìm thấy tài khoản");
+
+            return Ok(new
+            {
+                message = "Cập nhật token thành công",
+                account = accountDto
+            });
+        }
+
         // Thêm mới 1 người dùng
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Account>> Add(Account user)
         {
             user.Id = Guid.NewGuid();
@@ -51,6 +80,7 @@ namespace bookingEvent.Controllers
 
         // Cập nhật 1 người dùng
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Edit(Guid id, Account user)
         {
             if (id != user.Id) return BadRequest();
@@ -63,6 +93,7 @@ namespace bookingEvent.Controllers
 
         // Xoá 1 người dùng
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var user = await _context.Account.FindAsync(id);
@@ -74,4 +105,9 @@ namespace bookingEvent.Controllers
             return NoContent();
         }
     }
+}
+public class UpdateTokenRequest
+{
+    public Guid AccountId { get; set; }
+    public string Token { get; set; }
 }
