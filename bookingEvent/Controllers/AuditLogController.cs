@@ -1,5 +1,6 @@
 ﻿using bookingEvent.Model;
 using bookingEvent.Services;
+using bookingEvent.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookingEvent.Controllers
@@ -29,6 +30,16 @@ namespace bookingEvent.Controllers
 
             await _auditLogService.LogAsync(auditLog);
             return Ok(auditLog);
+        }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> Search([FromBody] AuditLogSearchDto search)
+        {
+            if (search == null)
+                return BadRequest("Search object cannot be null.");
+
+            var result = await _auditLogService.SearchAuditLogs(search);
+            return Ok(result);
         }
     }
 }

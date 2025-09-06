@@ -1,12 +1,16 @@
-﻿namespace bookingEvent.Infrastructure.Middlewares
+﻿using System;
+
+namespace bookingEvent.Infrastructure.Middlewares
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+ 
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     public class PermissionAttribute : Attribute
     {
-        public string Action { get; }
-        public PermissionAttribute(string action)
+        public string PermissionName { get; }
+
+        public PermissionAttribute(string permissionName)
         {
-            Action = action;
+            PermissionName = permissionName;
         }
     }
 }

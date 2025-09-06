@@ -9,21 +9,32 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.MaxDepth = 64;
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddEndpointsApiExplorer();
 // Đăng ký service
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<PermissionService>();
 builder.Services.AddScoped<AuditLogService>();
-builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<AccountGroupServices>();
-builder.Services.AddScoped<AccountGroupPermissionServices>();
+builder.Services.AddScoped<CategoryServices>();
+builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<TicketService >();
+builder.Services.AddScoped<OrganisationService >();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -91,6 +102,13 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await ApplicationDbContextSeed.SeedAsync(dbContext);
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -101,7 +119,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
+app.UseAuditLogging();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();

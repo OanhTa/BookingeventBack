@@ -166,7 +166,7 @@ D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\refint\bookingEvent.dll
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingEvent.pdb
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\bookingEvent.genruntimeconfig.cache
 D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\ref\bookingEvent.dll
-D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\bookingEventBack\bookingEvent\bin\Debug\net8.0\AutoMapper.dll
 D:\bookingEventBack\bookingEvent\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\bookingEventBack\bookingEvent\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\bookingEventBack\bookingEvent\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
