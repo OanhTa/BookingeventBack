@@ -26,6 +26,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.AuditLogController",
+    "Method": "Search",
+    "RelativePath": "api/AuditLog/search",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "search",
+        "Type": "bookingEvent.DTO.AuditLogSearchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -52,6 +68,38 @@
       {
         "Name": "dto",
         "Type": "bookingEvent.DTO.RegisterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuthController",
+    "Method": "RequestPasswordReset",
+    "RelativePath": "api/Auth/request-password-reset",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "RequestPasswordResetDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuthController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Auth/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "ResetPasswordDto",
         "IsRequired": true
       }
     ],
@@ -563,6 +611,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.RolesController",
+    "Method": "Search",
+    "RelativePath": "api/Roles/search-key",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.SettingsController",
+    "Method": "GetByPrefix",
+    "RelativePath": "api/Settings/{prefix}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "prefix",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.TicketController",
     "Method": "GetAll",
     "RelativePath": "api/Ticket",
@@ -717,7 +797,7 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "bookingEvent.Model.User",
+        "Type": "bookingEvent.DTO.CreateUserDto",
         "IsRequired": true
       }
     ],
@@ -754,7 +834,7 @@
       },
       {
         "Name": "user",
-        "Type": "bookingEvent.DTO.UserDto",
+        "Type": "bookingEvent.DTO.UpdateUserDto",
         "IsRequired": true
       }
     ],
@@ -846,6 +926,38 @@
         "Name": "userId",
         "Type": "System.Guid",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.UsersController",
+    "Method": "Search",
+    "RelativePath": "api/Users/search",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filter",
+        "Type": "bookingEvent.DTO.UserFilterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.UsersController",
+    "Method": "SearchKey",
+    "RelativePath": "api/Users/search-key",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -27,6 +27,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddEndpointsApiExplorer();
 // Đăng ký service
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<AppSettingService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<PermissionService>();

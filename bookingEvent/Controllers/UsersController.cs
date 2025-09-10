@@ -37,10 +37,24 @@ namespace bookingEvent.Controllers
             return Ok(user);
         }
 
+        [HttpPost("search")]
+        public async Task<IActionResult> Search([FromBody] UserFilterDto filter)
+        {
+            var users = await _userService.SearchUsersAsync(filter);
+            return Ok(users);
+        }
+
+        [HttpGet("search-key")]
+        public async Task<IActionResult> SearchKey([FromQuery] string keyword)
+        {
+            var result = await _userService.SearchUsersAsync(keyword);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Authorize]
         [Permission("Identity.Users.Create")]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create(CreateUserDto user)
         {
             var created = await _userService.CreateUserAsync(user);
             return Ok(created);
@@ -49,7 +63,7 @@ namespace bookingEvent.Controllers
         [HttpPut("{id}")]
         //[Authorize]
         //[Permission("Identity.Users.Update")]
-        public async Task<IActionResult> Update(Guid id, UserDto user)
+        public async Task<IActionResult> Update(Guid id, UpdateUserDto user)
         {
             if (id != user.Id) return BadRequest();
             var result = await _userService.UpdateUserAsync(user);
@@ -98,5 +112,28 @@ namespace bookingEvent.Controllers
             var permissions = await _userService.GetUserPermissionsAsync(userId);
             return Ok(permissions);
         }
+        [HttpPost("lock/{userId}")]
+        public async Task<IActionResult> LockUser(Guid userId, [FromBody] LockUserRequest request)
+        {
+            var success = await _userService.LockUserAsync(userId, request.LockEnd);
+            if (!success) return NotFound("User not found or cannot lock");
+
+            return Ok(new { message = $"User {userId} locked until {request.LockEnd}" });
+        }
+
+        [HttpPost("unlock/{userId}")]
+        public async Task<IActionResult> UnlockUser(Guid userId)
+        {
+            var success = await _userService.UnlockUserAsync(userId);
+            if (!success) return NotFound("User not found or cannot unlock");
+
+            return Ok(new { message = $"User {userId} unlocked" });
+        }
+
     }
+}
+
+public class LockUserRequest
+{
+    public DateTimeOffset LockEnd { get; set; }
 }

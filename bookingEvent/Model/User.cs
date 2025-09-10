@@ -24,8 +24,11 @@ namespace bookingEvent.Model
         public DateTimeOffset? LockoutEnd { get; set; }
         public int AccessFailedCount { get; set; } = 0;
 
-        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
-        public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
-        public ICollection<OrganisationUser> OrganisationUsers { get; set; } = new List<OrganisationUser>();
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordTokenExpiry { get; set; }
+
+        public ICollection<UserRole>? UserRoles { get; set; } = new List<UserRole>();
+        public ICollection<UserPermission>? UserPermissions { get; set; } = new List<UserPermission>();
+        public ICollection<OrganisationUser>? OrganisationUsers { get; set; } = new List<OrganisationUser>();
     }
 }

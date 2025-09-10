@@ -22,6 +22,7 @@ namespace bookingEvent.Services
             var roles = await _context.Roles
                 .Include(r => r.RolePermissions)
                     .ThenInclude(rp => rp.Permission)
+                .Include(r => r.UserRoles)
                 .ToListAsync();
 
             var roleDtos = _mapper.Map<List<RoleDto>>(roles);
@@ -43,6 +44,18 @@ namespace bookingEvent.Services
                 .ThenInclude(rp => rp.Permission)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
+
+        public async Task<IEnumerable<Role>> SearchRolesAsync(string keyword)
+        {
+            keyword = keyword?.ToLower() ?? "";
+
+            return await _context.Roles
+                .Where(r => r.Name.ToLower().Contains(keyword)
+                         || (r.Description != null && r.Description.ToLower().Contains(keyword))
+                         || r.Id.ToString().Contains(keyword))
+                .ToListAsync();
+        }
+
 
         public async Task<Role> CreateRoleAsync(Role role)
         {

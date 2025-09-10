@@ -29,6 +29,14 @@ namespace bookingEvent.Controllers
             return Ok(role);
         }
 
+        [HttpGet("search-key")]
+        public async Task<IActionResult> Search([FromQuery] string keyword)
+        {
+            var result = await _roleService.SearchRolesAsync(keyword);
+            return Ok(result);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(Role role)
         {

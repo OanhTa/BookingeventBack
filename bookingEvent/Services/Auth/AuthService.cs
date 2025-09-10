@@ -1,4 +1,5 @@
-﻿using bookingEvent.Data;
+﻿using bookingEvent.Const;
+using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,14 @@ namespace bookingEvent.Services.Auth
     public class AuthService
     {
         private readonly ApplicationDbContext _context;
+        private readonly AppSettingService _settingService;
+        private readonly EmailService _emailService;
 
-        public AuthService(ApplicationDbContext context)
+        public AuthService(ApplicationDbContext context, AppSettingService settingService, EmailService emailService)
         {
             _context = context;
+            _settingService = settingService;
+            _emailService = emailService;
         }
 
         public string GenerateToken(User user)
@@ -66,6 +71,12 @@ namespace bookingEvent.Services.Auth
 
         public async Task<User?> Register(string username, string email, string password)
         {
+            var isSelfRegistrationEnabled = await _settingService.IsTrueAsync(AppSettingNames.IsSelfRegistrationEnabled);
+            if (isSelfRegistrationEnabled)
+            {
+                throw new InvalidOperationException("Tự đăng ký tài khoản đã bị vô hiệu hóa.");
+            }
+
             if (_context.Users.Any(u => u.Email == email)) return null;
 
             var hashed = BCrypt.Net.BCrypt.HashPassword(password);
@@ -84,6 +95,12 @@ namespace bookingEvent.Services.Auth
 
         public async Task<LoginResponseDto?> Login(string email, string password)
         {
+            var enableLocalLogin = await _settingService.IsTrueAsync(AppSettingNames.EnableLocalLogin);
+            if (enableLocalLogin)
+            {
+                throw new InvalidOperationException("Đăng nhập bằng tài khoản nội bộ đã bị vô hiệu hóa.");
+            }
+
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
@@ -110,5 +127,42 @@ namespace bookingEvent.Services.Auth
             };
         }
 
+        public async Task RequestPasswordResetAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null) return; 
+
+            var token = Guid.NewGuid().ToString();
+
+            user.ResetPasswordToken = token;
+            user.ResetPasswordTokenExpiry = DateTime.UtcNow.AddHours(1);
+
+            _context.Entry(user).Property(u => u.ResetPasswordToken).IsModified = true;
+            _context.Entry(user).Property(u => u.ResetPasswordTokenExpiry).IsModified = true;
+            await _context.SaveChangesAsync();
+
+            var resetLink = $"http://localhost:4200/reset-password?token={token}";
+            await _emailService.SendEmailAsync(email, "Đặt lại mật khẩu", $"Click link để đổi mật khẩu: {resetLink}");
+        }
+
+        public async Task<bool> ResetPasswordAsync(string token, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.ResetPasswordToken == token &&
+                                                                      u.ResetPasswordTokenExpiry > DateTime.UtcNow);
+            if (user == null) return false;
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+            // Xoá token sau khi sử dụng
+            user.ResetPasswordToken = null;
+            user.ResetPasswordTokenExpiry = null;
+
+            _context.Entry(user).Property(u => u.PasswordHash).IsModified = true;
+            _context.Entry(user).Property(u => u.ResetPasswordToken).IsModified = true;
+            _context.Entry(user).Property(u => u.ResetPasswordTokenExpiry).IsModified = true;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

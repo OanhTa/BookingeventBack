@@ -9,6 +9,7 @@ namespace bookingEvent.Data
         {
 
         }
+        public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
@@ -28,6 +29,14 @@ namespace bookingEvent.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Role>()
+               .HasIndex(r => r.Name)
+               .IsUnique();
+
+            modelBuilder.Entity<User>()
+              .HasIndex(r => r.UserName)
+              .IsUnique();
 
             modelBuilder.Entity<UserRole>().HasKey(x => new { x.UserId, x.RoleId });
             modelBuilder.Entity<RolePermission>().HasKey(x => new { x.RoleId, x.PermissionId });
