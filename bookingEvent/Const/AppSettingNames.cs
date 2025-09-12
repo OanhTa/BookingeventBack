@@ -12,6 +12,11 @@
         public const string PasswordRequireLowercase = "App.PasswordPolicy.RequireLowercase";
         public const string PasswordRequireUppercase = "App.PasswordPolicy.RequireUppercase";
         public const string PasswordRequireDigit = "App.PasswordPolicy.RequireDigit";
- 
+
+        public const string LockoutDuration = "App.Identity.LockoutDuration";
+        public const string MaxFailedAccess = "App.Identity.MaxFailedAccess";
+
+
+
     }
 }

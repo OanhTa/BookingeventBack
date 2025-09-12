@@ -76,20 +76,23 @@ namespace bookingEvent.Services.Auth
             {
                 throw new InvalidOperationException("Tự đăng ký tài khoản đã bị vô hiệu hóa.");
             }
-
             if (_context.Users.Any(u => u.Email == email)) return null;
-
-            var hashed = BCrypt.Net.BCrypt.HashPassword(password);
-
             var user = new User
             {
                 UserName = username,
                 Email = email,
-                PasswordHash = hashed
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
             };
+            var token = Guid.NewGuid().ToString();
+            user.EmailConfirmedToken = token;
+
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
+
+            var resetLink = $"http://localhost:4200/email-verify?token={token}";
+            await _emailService.SendEmailAsync(email, "Xác thực email", $"Click link để xác thực email: {resetLink}");
             return user;
         }
 
@@ -107,13 +110,18 @@ namespace bookingEvent.Services.Auth
                 .FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null) return null;
-            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) return null;
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            {
+                await HandleFailedLoginAsync(user);
+                return null;
+            }
 
             var token = GenerateToken(user);
 
             // cập nhật hạn token 7 ngày
             user.AccessToken = token;
             user.TokenExpireTime = DateTime.UtcNow.AddDays(7);
+            user.AccessFailedCount = 0;
             await _context.SaveChangesAsync();
 
             return new LoginResponseDto
@@ -121,7 +129,10 @@ namespace bookingEvent.Services.Auth
                 Token = token,
                 UserId = user.Id,
                 Email = user.Email,
-                FullName = user.UserName,
+                UserName = user.UserName,
+                FullName = user.FullName,
+                Phone = user.Phone,
+                AvatarUrl = user.AvatarUrl,
                 Expiry = user.TokenExpireTime.Value,
                 Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
             };
@@ -130,7 +141,7 @@ namespace bookingEvent.Services.Auth
         public async Task RequestPasswordResetAsync(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null) return; 
+            if (user == null) return;
 
             var token = Guid.NewGuid().ToString();
 
@@ -164,5 +175,99 @@ namespace bookingEvent.Services.Auth
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<string> ConfirmEmailAsync(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token không hợp lệ");
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.EmailConfirmedToken == token);
+
+            if (user == null)
+                throw new Exception("Người dùng không tồn tại hoặc token sai");
+
+            user.EmailConfirmed = true;
+            user.EmailConfirmedAt = DateTime.UtcNow;
+            user.EmailConfirmedToken = null;
+            await _context.SaveChangesAsync();
+            return "Xác thực email thành công!";
+        }
+
+        public async Task<PasswordValidatorResult> Validate(string password)
+        {
+            var minLengthStr = await _settingService.GetValueAsync(AppSettingNames.PasswordMinLength);
+            int minLength = int.TryParse(minLengthStr, out var ml) ? ml : 6;
+
+            var minUniqueStr = await _settingService.GetValueAsync(AppSettingNames.PasswordUniqueChars);
+            int minUniqueChars = int.TryParse(minUniqueStr, out var mu) ? mu : 3;
+
+            var requireSpecialChar = await _settingService.IsTrueAsync(AppSettingNames.PasswordRequireNonAlphanumeric);
+
+            var requireLowercaseStr = await _settingService.GetValueAsync(AppSettingNames.PasswordRequireLowercase);
+            bool requireLowercase = bool.TryParse(requireLowercaseStr, out var rl) && rl;
+
+            var requireUppercaseStr = await _settingService.GetValueAsync(AppSettingNames.PasswordRequireUppercase);
+            bool requireUppercase = bool.TryParse(requireUppercaseStr, out var ru) && ru;
+
+            var requireDigitStr = await _settingService.GetValueAsync(AppSettingNames.PasswordRequireDigit);
+            bool requireDigit = bool.TryParse(requireDigitStr, out var rd) && rd;
+
+            var result = new PasswordValidatorResult();
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                result.Errors.Add("Mật khẩu không được để trống.");
+                result.IsValid = false;
+                return result;
+            }
+
+            if (password.Length < minLength)
+                result.Errors.Add($"Mật khẩu phải có ít nhất {minLength} ký tự.");
+
+            if (password.Distinct().Count() < minUniqueChars)
+                result.Errors.Add($"Mật khẩu phải có ít nhất {minUniqueChars} ký tự khác nhau.");
+
+            if (requireSpecialChar && !password.Any(ch => !char.IsLetterOrDigit(ch)))
+                result.Errors.Add("Mật khẩu phải chứa ít nhất một ký tự đặc biệt.");
+
+            if (requireLowercase && !password.Any(char.IsLower))
+                result.Errors.Add("Mật khẩu phải chứa ít nhất một chữ thường (a-z).");
+
+            if (requireUppercase && !password.Any(char.IsUpper))
+                result.Errors.Add("Mật khẩu phải chứa ít nhất một chữ hoa (A-Z).");
+
+            if (requireDigit && !password.Any(char.IsDigit))
+                result.Errors.Add("Mật khẩu phải chứa ít nhất một chữ số (0-9).");
+
+            result.IsValid = !result.Errors.Any();
+            return result;
+        }
+
+        private async Task HandleFailedLoginAsync(User user)
+        {
+            var maxFailed = await _settingService.GetValueAsync(AppSettingNames.MaxFailedAccess);
+            var lockDuration = await _settingService.GetValueAsync(AppSettingNames.LockoutDuration);
+
+            // ép kiểu sang int
+            int maxFailedCount = Convert.ToInt32(maxFailed);
+            int lockDurationMinutes = Convert.ToInt32(lockDuration);
+
+            user.AccessFailedCount += 1;
+
+            if (user.AccessFailedCount >= maxFailedCount)
+            {
+                user.LockoutEnabled = true;
+                user.LockoutEnd = DateTimeOffset.UtcNow.AddMinutes(lockDurationMinutes);
+                user.AccessFailedCount = 0;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+    }
+
+    public class PasswordValidatorResult
+    {
+        public bool IsValid { get; set; }
+        public List<string> Errors { get; set; } = new();
     }
 }

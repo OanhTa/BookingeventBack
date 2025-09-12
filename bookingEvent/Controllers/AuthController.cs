@@ -26,6 +26,16 @@ namespace bookingEvent.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
+            var validateResult = await _authService.Validate(dto.Password);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Message = "Mật khẩu không hợp lệ",
+                    Errors = validateResult.Errors
+                });
+            }
+
             var user = await _authService.Register(dto.UserName, dto.Email, dto.Password);
             if (user == null) return BadRequest("Email đã tồn tại");
             return Ok(new { message = "Đăng ký thành công" });
@@ -68,6 +78,20 @@ namespace bookingEvent.Controllers
                 return BadRequest(new { message = "Invalid or expired token." });
 
             return Ok(new { message = "Password has been successfully reset." });
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string token)
+        {
+            try
+            {
+                var message = await _authService.ConfirmEmailAsync(token);
+                return Ok(new { message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message ?? "Có lỗi xảy ra khi xác thực email" });
+            }
         }
 
     }

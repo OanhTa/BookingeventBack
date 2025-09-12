@@ -56,6 +56,31 @@ namespace bookingEvent.Services
                 .ToListAsync();
         }
 
+        public async Task<int> MoveUsersToRoleAsync(Guid oldRoleId, Guid newRoleId)
+        {
+            var userRoles = await _context.UserRoles
+                .Where(ur => ur.RoleId == oldRoleId)
+                .ToListAsync();
+
+            if (!userRoles.Any())
+            {
+                return 0; 
+            }
+            foreach (var ur in userRoles)
+            {
+                _context.UserRoles.Remove(ur);
+
+                _context.UserRoles.Add(new UserRole
+                {
+                    UserId = ur.UserId,
+                    RoleId = newRoleId
+                });
+            }
+            await _context.SaveChangesAsync();
+
+            return userRoles.Count;
+        }
+
 
         public async Task<Role> CreateRoleAsync(Role role)
         {

@@ -17,6 +17,11 @@ public class AuditLogMiddleware
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
+        var routeData = context.GetRouteData();
+        var entityName = routeData.Values["controller"]?.ToString(); // "Roles"
+        var entityId = routeData.Values["id"]?.ToString();           // "123" nếu URL có /id
+
+
         var log = new AuditLog
         {
             Id = Guid.NewGuid(),
@@ -26,7 +31,10 @@ public class AuditLogMiddleware
             Url = context.Request.Path + context.Request.QueryString,
             ClientIpAddress = context.Connection.RemoteIpAddress?.ToString(),
             CorrelationId = context.TraceIdentifier,
-            ExecutionTime = DateTime.UtcNow
+            ExecutionTime = DateTime.UtcNow,
+
+            EntityId = entityId?.ToString(),
+            Entity = entityName
         };
 
         try

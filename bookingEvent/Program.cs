@@ -37,6 +37,7 @@ builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<TicketService >();
 builder.Services.AddScoped<OrganisationService >();
+builder.Services.AddScoped<CloudinaryService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

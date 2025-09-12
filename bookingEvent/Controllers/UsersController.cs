@@ -20,7 +20,7 @@ namespace bookingEvent.Controllers
 
         [HttpGet]
         [Authorize]
-        //[Permission("Identity.Users.Read")]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -28,8 +28,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize]
-        //[Permission("Identity.Users.Read")]
+        [Authorize]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -38,6 +38,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPost("search")]
+        [Authorize]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> Search([FromBody] UserFilterDto filter)
         {
             var users = await _userService.SearchUsersAsync(filter);
@@ -45,6 +47,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("search-key")]
+        [Authorize]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> SearchKey([FromQuery] string keyword)
         {
             var result = await _userService.SearchUsersAsync(keyword);
@@ -61,8 +65,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize]
-        //[Permission("Identity.Users.Update")]
+        [Authorize]
+        [Permission("Identity.Users.Update")]
         public async Task<IActionResult> Update(Guid id, UpdateUserDto user)
         {
             if (id != user.Id) return BadRequest();
@@ -72,6 +76,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPut("{id}/set-password")]
+        [Authorize]
+        [Permission("Identity.Users.Update")]
         public async Task<IActionResult> SetPassword(Guid id, [FromBody] SetPasswordDto dto)
         {
             if (id != dto.Id) return BadRequest();
@@ -83,8 +89,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize]
-        //[Permission("Identity.Users.Delete")]
+        [Authorize]
+        [Permission("Identity.Users.Delete")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _userService.DeleteUserAsync(id);
@@ -93,6 +99,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPost("{userId}/assign-role/{roleId}")]
+        [Authorize]
+        [Permission("Identity.Users.Update")]
         public async Task<IActionResult> AssignRole(Guid userId, Guid roleId)
         {
             await _userService.AssignRoleToUserAsync(userId, roleId);
@@ -100,6 +108,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("{userId}/roles")]
+        [Authorize]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> GetUserRoles(Guid userId)
         {
             var roles = await _userService.GetUserRolesAsync(userId);
@@ -107,12 +117,16 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("{userId}/permissions")]
+        [Authorize]
+        [Permission("Identity.Users.Read")]
         public async Task<IActionResult> GetUserPermissions(Guid userId)
         {
             var permissions = await _userService.GetUserPermissionsAsync(userId);
             return Ok(permissions);
         }
         [HttpPost("lock/{userId}")]
+        [Authorize]
+        [Permission("Identity.Users.Update")]
         public async Task<IActionResult> LockUser(Guid userId, [FromBody] LockUserRequest request)
         {
             var success = await _userService.LockUserAsync(userId, request.LockEnd);
@@ -122,6 +136,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPost("unlock/{userId}")]
+        [Authorize]
+        [Permission("Identity.Users.Update")]
         public async Task<IActionResult> UnlockUser(Guid userId)
         {
             var success = await _userService.UnlockUserAsync(userId);

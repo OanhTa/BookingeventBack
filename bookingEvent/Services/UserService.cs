@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
@@ -11,12 +12,14 @@ namespace bookingEvent.Services
     public class UserService
     {
         private readonly ApplicationDbContext _context;
+        private readonly AppSettingService _settingService;
         private readonly IMapper _mapper;
 
-        public UserService(ApplicationDbContext context, IMapper mapper)
+        public UserService(ApplicationDbContext context, IMapper mapper, AppSettingService settingService)
         {
             _context = context;
             _mapper = mapper;
+            _settingService = settingService;
         }
 
         public async Task<User> CreateUserAsync(CreateUserDto dto)
