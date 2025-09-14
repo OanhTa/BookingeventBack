@@ -16,8 +16,6 @@ namespace bookingEvent.Model
         public string PasswordHash { get; set; } = null!;
         public string? Phone { get; set; }
         public string? Address { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string? AccessToken { get; set; }
         public DateTime? TokenExpireTime { get; set; }
 
@@ -27,6 +25,8 @@ namespace bookingEvent.Model
 
         public string? ResetPasswordToken { get; set; }
         public DateTime? ResetPasswordTokenExpiry { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<UserRole>? UserRoles { get; set; } = new List<UserRole>();
         public ICollection<UserPermission>? UserPermissions { get; set; } = new List<UserPermission>();

@@ -1,5 +1,5 @@
 ﻿using bookingEvent.Model;
-using bookingEvent.Services;
+using bookingEvent.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using static bookingEvent.Const.Permissions;
 
@@ -9,9 +9,9 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class PermissionsController : ControllerBase
     {
-        private readonly PermissionService _permissionService;
+        private readonly IPermissionRepository _permissionService;
 
-        public PermissionsController(PermissionService permissionService)
+        public PermissionsController(IPermissionRepository permissionService)
         {
             _permissionService = permissionService;
         }

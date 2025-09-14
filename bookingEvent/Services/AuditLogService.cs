@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using bookingEvent.Data;
-using bookingEvent.Model;
 using bookingEvent.DTO;
+using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookingEvent.Services
 {
-    public class AuditLogService
+    public class AuditLogService : IAuditLogRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;

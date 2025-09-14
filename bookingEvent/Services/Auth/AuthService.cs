@@ -2,6 +2,7 @@
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace bookingEvent.Services.Auth
 {
-    public class AuthService
+    public class AuthService : IAuthRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly AppSettingService _settingService;

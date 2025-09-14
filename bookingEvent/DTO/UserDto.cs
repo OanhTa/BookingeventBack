@@ -17,15 +17,15 @@ namespace bookingEvent.DTO
 
     public class UpdateUserDto
     {
-        public Guid Id { get; set; }
-        public string UserName { get; set; } = null!;
+        public Guid? Id { get; set; }
+        public string? UserName { get; set; } = null!;
         public string? FullName { get; set; } = null!;
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
         public string? PasswordHash { get; set; }
-        public List<Guid> RoleIds { get; set; } = new();
-        public List<Guid> OrganisationIds { get; set; } = new();
+        public List<Guid>? RoleIds { get; set; } = new();
+        public List<Guid>? OrganisationIds { get; set; } = new();
     }
 
 

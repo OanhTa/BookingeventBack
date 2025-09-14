@@ -3,13 +3,14 @@ using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace bookingEvent.Services
 {
-    public class UserService
+    public class UserService : IUserRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly AppSettingService _settingService;
@@ -28,6 +29,7 @@ namespace bookingEvent.Services
             {
                 Id = Guid.NewGuid(),
                 UserName = dto.UserName,
+                FullName = dto.FullName,
                 Email = dto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash),
                 Phone = dto.Phone,
@@ -61,7 +63,9 @@ namespace bookingEvent.Services
                 .FirstOrDefaultAsync(u => u.Id == dto.Id);
 
             if (user == null) return false;
+
             user.UserName = dto.UserName;
+            user.FullName = dto.FullName;
             user.Email = dto.Email;
             user.Phone = dto.Phone;
             user.Address = dto.Address;
@@ -91,6 +95,21 @@ namespace bookingEvent.Services
                     OrganisationId = orgId
                 });
             }
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateProfileAsync(UpdateUserDto dto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == dto.Id);
+            if (user == null) return false;
+
+            user.UserName = dto.UserName;
+            user.FullName = dto.FullName;
+            user.Email = dto.Email;
+            user.Phone = dto.Phone;
+            user.Address = dto.Address;
+            
             await _context.SaveChangesAsync();
             return true;
         }

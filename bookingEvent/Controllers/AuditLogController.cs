@@ -1,6 +1,7 @@
-﻿using bookingEvent.Model;
+﻿using bookingEvent.DTO;
+using bookingEvent.Model;
+using bookingEvent.Repositories;
 using bookingEvent.Services;
-using bookingEvent.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookingEvent.Controllers
@@ -9,8 +10,8 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class AuditLogController : ControllerBase
     {
-        private AuditLogService _auditLogService;
-        public AuditLogController(AuditLogService auditLogService)
+        private IAuditLogRepository _auditLogService;
+        public AuditLogController(IAuditLogRepository auditLogService)
         {
             _auditLogService = auditLogService;
         }

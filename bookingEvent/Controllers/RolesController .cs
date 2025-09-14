@@ -1,5 +1,6 @@
 ﻿using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using bookingEvent.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class RolesController : ControllerBase
     {
-        private readonly RoleService _roleService;
+        private readonly IRoleRepository _roleService;
 
-        public RolesController(RoleService roleService)
+        public RolesController(IRoleRepository roleService)
         {
             _roleService = roleService;
         }

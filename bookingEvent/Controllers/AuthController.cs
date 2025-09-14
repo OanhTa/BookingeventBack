@@ -3,6 +3,7 @@ using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using bookingEvent.Services;
 using bookingEvent.Services.Auth;
 using Microsoft.AspNetCore.Identity.Data;
@@ -14,10 +15,10 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService _authService;
+        private readonly IAuthRepository _authService;
         private readonly AppSettingService _settingService;
 
-        public AuthController(AuthService authService, AppSettingService settingService)
+        public AuthController(IAuthRepository authService, AppSettingService settingService)
         {
             _authService = authService;
             _settingService = settingService;

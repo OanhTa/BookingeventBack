@@ -2,12 +2,13 @@
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace bookingEvent.Services
 {
-    public class RoleService
+    public class RoleService : IRoleRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;

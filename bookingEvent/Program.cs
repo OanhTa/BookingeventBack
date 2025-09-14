@@ -1,7 +1,9 @@
 ﻿using bookingEvent.Data;
 using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Mapping;
+using bookingEvent.Repositories;
 using bookingEvent.Services;
+using bookingEvent.Repositories;
 using bookingEvent.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -24,14 +26,17 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
-builder.Services.AddScoped<AuthService>();
+
 builder.Services.AddEndpointsApiExplorer();
 // Đăng ký service
+builder.Services.AddScoped<IAuthRepository, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserService>();
+builder.Services.AddScoped<IRoleRepository, RoleService>();
+builder.Services.AddScoped<IPermissionRepository, PermissionService>();
+builder.Services.AddScoped<IAuditLogRepository, AuditLogService>();
+
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<AppSettingService>();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<RoleService>();
-builder.Services.AddScoped<PermissionService>();
 builder.Services.AddScoped<AuditLogService>();
 builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<EventService>();
