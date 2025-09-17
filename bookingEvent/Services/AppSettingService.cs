@@ -31,10 +31,7 @@ namespace bookingEvent.Services
         public async Task<string?> GetValueAsync(string name, string? providerName = null, string? providerKey = null)
         {
             var setting = await _context.AppSettings
-                .FirstOrDefaultAsync(x =>
-                    x.Name == name &&
-                    x.ProviderName == providerName &&
-                    x.ProviderKey == providerKey);
+                .FirstOrDefaultAsync(x => x.Name == name);
 
             return setting?.Value;
         }

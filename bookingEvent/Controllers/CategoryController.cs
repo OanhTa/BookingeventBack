@@ -19,11 +19,18 @@ namespace bookingEvent.Controllers
 
         [HttpGet]
         [Authorize]
-        //[Permission("Identity.Category.Read")]
+        [Permission("Identity.Category.Read")]
         public async Task<ActionResult<IEnumerable<Category>>> GetAll()
         {
-            var categories = await _categoryServices.GetAllAsync();
-            return Ok(categories);
+            try
+            {
+                var categories = await _categoryServices.GetAllAsync();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Đã có lỗi xảy ra khi lấy danh mục.", details = ex.Message });
+            }
         }
     }
 }

@@ -2,10 +2,8 @@
 using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Model;
 using bookingEvent.Repositories;
-using bookingEvent.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static bookingEvent.Const.Permissions;
 
 namespace bookingEvent.Controllers
 {
@@ -14,10 +12,12 @@ namespace bookingEvent.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userService;
+        private readonly IAuthRepository _authService;
 
-        public UsersController(IUserRepository userService)
+        public UsersController(IUserRepository userService, IAuthRepository authService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -91,6 +91,11 @@ namespace bookingEvent.Controllers
         [Permission("Identity.Users.Create")]
         public async Task<IActionResult> Create(CreateUserDto user)
         {
+            var validateResult = await _authService.Validate(user.PasswordHash);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(ApiResponse<object>.ErrorResponse("Mật khẩu không hợp lệ", validateResult.Errors,StatusCodes.Status400BadRequest));
+            }
             try
             {
                 var created = await _userService.CreateUserAsync(user);
@@ -244,7 +249,7 @@ namespace bookingEvent.Controllers
                 if (!success)
                     return NotFound(ApiResponse<object>.ErrorResponse("User không tồn tại hoặc không thể khóa", null, 404));
 
-                return Ok(ApiResponse<object>.SuccessResponse(null, $"User {userId} bị khóa đến {request.LockEnd}"));
+                return Ok(ApiResponse<object>.SuccessResponse(null, $"Tài khoản sẽ bị khóa đến {request.LockEnd}"));
             }
             catch (Exception ex)
             {
@@ -263,7 +268,7 @@ namespace bookingEvent.Controllers
                 if (!success)
                     return NotFound(ApiResponse<object>.ErrorResponse("User không tồn tại hoặc không thể mở khóa", null, 404));
 
-                return Ok(ApiResponse<object>.SuccessResponse(null, $"User {userId} đã được mở khóa"));
+                return Ok(ApiResponse<object>.SuccessResponse(null, $"Tài khoản đã được mở khóa"));
             }
             catch (Exception ex)
             {

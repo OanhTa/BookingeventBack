@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
 using bookingEvent.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace bookingEvent.Services
 {
@@ -116,18 +113,21 @@ namespace bookingEvent.Services
         public async Task<User?> GetUserByIdAsync(Guid id)
         {
             return await _context.Users
+                .Where(u => u.isDelete == false)
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users
+                .Where(u => u.isDelete == false)
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .ToListAsync();
         }
         public async Task<IEnumerable<User>> SearchUsersAsync(UserFilterDto filter)
         {
             var query = _context.Users
+                .Where(u => u.isDelete == false)
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                 .AsQueryable();
 
@@ -177,17 +177,16 @@ namespace bookingEvent.Services
             if (string.IsNullOrWhiteSpace(keyword))
                 return new List<User>();
 
-            var query = _context.Users.AsQueryable();
-
-            query = query.Where(u =>
-                u.UserName.Contains(keyword) ||
-                (u.FullName != null && u.FullName.Contains(keyword)) ||
-                (u.Email != null && u.Email.Contains(keyword)) ||
-                (u.Phone != null && u.Phone.Contains(keyword))
-            );
-
-            return await query.ToListAsync();
+            return await _context.Users
+                .Where(u => u.isDelete == false && (
+                    u.UserName.Contains(keyword) ||
+                    (u.FullName != null && u.FullName.Contains(keyword)) ||
+                    (u.Email != null && u.Email.Contains(keyword)) ||
+                    (u.Phone != null && u.Phone.Contains(keyword))
+                ))
+                .ToListAsync();
         }
+
         public async Task<bool> IsTokenValidAsync(Guid userId, string token)
         {
             var user = await _context.Users
@@ -216,7 +215,7 @@ namespace bookingEvent.Services
             var user = await _context.Users.FindAsync(id);
             if (user == null) return false;
 
-            _context.Users.Remove(user);
+            user.isDelete = true;
             return await _context.SaveChangesAsync() > 0;
         }
         public async Task AssignRoleToUserAsync(Guid userId, Guid roleId)

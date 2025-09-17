@@ -35,6 +35,7 @@ builder.Services.AddScoped<IRoleRepository, RoleService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionService>();
 builder.Services.AddScoped<IAuditLogRepository, AuditLogService>();
 
+builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<AppSettingService>();
 builder.Services.AddScoped<AuditLogService>();

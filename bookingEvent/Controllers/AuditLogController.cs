@@ -1,7 +1,8 @@
 ﻿using bookingEvent.DTO;
+using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Model;
 using bookingEvent.Repositories;
-using bookingEvent.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookingEvent.Controllers
@@ -10,37 +11,109 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class AuditLogController : ControllerBase
     {
-        private IAuditLogRepository _auditLogService;
+        private readonly IAuditLogRepository _auditLogService;
+
         public AuditLogController(IAuditLogRepository auditLogService)
         {
             _auditLogService = auditLogService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [Authorize]
+        [Permission("Identity.AuditLog.Read")]
+        public async Task<IActionResult> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var logs = await _auditLogService.GetAllAsync();
-            return Ok(logs);
+            try
+            {
+                var (logs, totalCount) = await _auditLogService.GetPagedAsync(page, pageSize);
+                return Ok(ApiResponse<object>.SuccessResponse(
+                     new
+                     {
+                         Data = logs,
+                         TotalCount = totalCount,
+                         Page = page,
+                         PageSize = pageSize
+                     },
+                     "Lấy danh sách audit log thành công"
+                 ));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<object>.ErrorResponse(
+                        "Lỗi hệ thống",
+                        new List<string> { ex.Message },
+                        StatusCodes.Status500InternalServerError
+                    ));
+            }
         }
 
         [HttpPost]
+        [Authorize]
+        [Permission("Identity.AuditLog.Create")]
         public async Task<IActionResult> Create([FromBody] AuditLog auditLog)
         {
-            if (auditLog == null)
-                return BadRequest("AuditLog is null");
+            try
+            {
+                if (auditLog == null)
+                    return BadRequest(ApiResponse<object>.ErrorResponse(
+                        "AuditLog is null",
+                        new List<string> { "Dữ liệu gửi lên không hợp lệ" },
+                        StatusCodes.Status400BadRequest
+                    ));
 
-            await _auditLogService.LogAsync(auditLog);
-            return Ok(auditLog);
+                await _auditLogService.LogAsync(auditLog);
+                return Ok(ApiResponse<AuditLog>.SuccessResponse(
+                    auditLog,
+                    "Tạo audit log thành công"
+                ));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<object>.ErrorResponse(
+                        "Lỗi hệ thống",
+                        new List<string> { ex.Message },
+                        StatusCodes.Status500InternalServerError
+                    ));
+            }
         }
 
         [HttpPost("search")]
-        public async Task<IActionResult> Search([FromBody] AuditLogSearchDto search)
+        [Authorize]
+        [Permission("Identity.Users.Read")]
+        public async Task<IActionResult> Search([FromBody] AuditLogSearchDto search, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            if (search == null)
-                return BadRequest("Search object cannot be null.");
+            try
+            {
+                if (search == null)
+                    return BadRequest(ApiResponse<object>.ErrorResponse(
+                        "Search object cannot be null",
+                        new List<string> { "Dữ liệu tìm kiếm không hợp lệ" },
+                        StatusCodes.Status400BadRequest
+                    ));
 
-            var result = await _auditLogService.SearchAuditLogs(search);
-            return Ok(result);
+                var (logs, totalCount) = await _auditLogService.SearchAuditLogs(search, page, pageSize);
+                return Ok(ApiResponse<object>.SuccessResponse(
+                      new
+                      {
+                          Data = logs,
+                          TotalCount = totalCount,
+                          Page = page,
+                          PageSize = pageSize
+                      },
+                      "Tìm kiếm audit log thành công"
+                  ));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ApiResponse<object>.ErrorResponse(
+                        "Lỗi hệ thống",
+                        new List<string> { ex.Message },
+                        StatusCodes.Status500InternalServerError
+                    ));
+            }
         }
     }
 }

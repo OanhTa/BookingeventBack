@@ -27,6 +27,7 @@ namespace bookingEvent.Model
         public DateTime? ResetPasswordTokenExpiry { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool? isDelete { get; set; } = false;
 
         public ICollection<UserRole>? UserRoles { get; set; } = new List<UserRole>();
         public ICollection<UserPermission>? UserPermissions { get; set; } = new List<UserPermission>();

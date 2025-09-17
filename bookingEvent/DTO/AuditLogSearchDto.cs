@@ -5,6 +5,7 @@
         public string? UserName { get; set; }
         public string? ApplicationName { get; set; }
         public string? HttpMethod { get; set; }
+        public string? keyWord { get; set; }
         public string? Url { get; set; }
         public int? StatusCode { get; set; }
         public string? ClientIpAddress { get; set; }

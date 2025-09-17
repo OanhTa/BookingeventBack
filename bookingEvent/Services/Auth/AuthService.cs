@@ -3,6 +3,7 @@ using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
 using bookingEvent.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -73,7 +74,7 @@ namespace bookingEvent.Services.Auth
         public async Task<User?> Register(string username, string email, string password)
         {
             var isSelfRegistrationEnabled = await _settingService.IsTrueAsync(AppSettingNames.IsSelfRegistrationEnabled);
-            if (isSelfRegistrationEnabled)
+            if (!isSelfRegistrationEnabled)
             {
                 throw new InvalidOperationException("Tự đăng ký tài khoản đã bị vô hiệu hóa.");
             }
@@ -100,7 +101,7 @@ namespace bookingEvent.Services.Auth
         public async Task<LoginResponseDto?> Login(string email, string password)
         {
             var enableLocalLogin = await _settingService.IsTrueAsync(AppSettingNames.EnableLocalLogin);
-            if (enableLocalLogin)
+            if (!enableLocalLogin)
             {
                 throw new InvalidOperationException("Đăng nhập bằng tài khoản nội bộ đã bị vô hiệu hóa.");
             }
@@ -108,7 +109,13 @@ namespace bookingEvent.Services.Auth
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Email == email);
+                .FirstOrDefaultAsync(u => u.Email == email || u.UserName == email);
+
+            if (!user.EmailConfirmed)
+                throw new InvalidOperationException("Email chưa được xác thực. Vui lòng xác thực trước khi đăng nhập.");
+
+            if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow)
+                throw new InvalidOperationException("Tài khoản của bạn đã bị khóa. Vui lòng lòng thử lại sau.");
 
             if (user == null) return null;
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
@@ -137,6 +144,22 @@ namespace bookingEvent.Services.Auth
                 Expiry = user.TokenExpireTime.Value,
                 Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
             };
+        }
+
+        public async Task<bool> ChangePasswordAsync(string userId, string passwordCurrent, string passwordNew)
+        {
+            var userIdGuid = Guid.Parse(userId);
+            var user = await _context.Users.FindAsync(userIdGuid);
+            if (user == null)
+                throw new InvalidOperationException("Người dùng không tồn tại.");
+
+            // Kiểm tra mật khẩu hiện tại
+            if (!BCrypt.Net.BCrypt.Verify(passwordCurrent, user.PasswordHash))
+                throw new InvalidOperationException("Mật khẩu hiện tại không đúng.");
+
+            // Hash mật khẩu mới và lưu
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(passwordNew);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task RequestPasswordResetAsync(string email)

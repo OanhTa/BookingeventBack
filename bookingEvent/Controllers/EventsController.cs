@@ -19,74 +19,123 @@ namespace bookingEvent.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var events = await _eventService.GetAllAsync();
-            return Ok(events);
+            try
+            {
+                var events = await _eventService.GetAllAsync();
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi lấy danh sách sự kiện.", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var ev = await _eventService.GetByIdAsync(id);
-            if (ev == null) return NotFound();
-            return Ok(ev);
+            try
+            {
+                var ev = await _eventService.GetByIdAsync(id);
+                if (ev == null) return NotFound(new { message = "Không tìm thấy sự kiện." });
+                return Ok(ev);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi lấy sự kiện.", details = ex.Message });
+            }
         }
 
         [HttpGet("by-org/{orgId}")]
         public async Task<IActionResult> GetByOrganisation(Guid orgId)
         {
-            var events = await _eventService.GetEventsByOrganisationAsync(orgId);
-            return Ok(events);
+            try
+            {
+                var events = await _eventService.GetEventsByOrganisationAsync(orgId);
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi lấy sự kiện theo tổ chức.", details = ex.Message });
+            }
         }
 
         [HttpGet("by-user/{userId}")]
         public async Task<IActionResult> GetByUser(Guid userId)
         {
-            var events = await _eventService.GetEventsByUserAsync(userId);
-            return Ok(events);
+            try
+            {
+                var events = await _eventService.GetEventsByUserAsync(userId);
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi lấy sự kiện theo người dùng.", details = ex.Message });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] EventWithDetailDto dto)
         {
-            var newEvent = new Event
+            try
             {
-                Name = dto.Name,
-                PriceFrom = dto.PriceFrom,
-                Date = dto.Date,
-                Time  = dto.Time,
-                Duration   = dto.Duration,
-                Thumbnail = dto.Thumbnail,
-                Status = dto.Status,
-                CategoryId = dto.CategoryId
-            };
+                var newEvent = new Event
+                {
+                    Name = dto.Name,
+                    PriceFrom = dto.PriceFrom,
+                    Date = dto.Date,
+                    Time = dto.Time,
+                    Duration = dto.Duration,
+                    Thumbnail = dto.Thumbnail,
+                    Status = dto.Status,
+                    CategoryId = dto.CategoryId
+                };
 
-            var detail = new EventDetail
+                var detail = new EventDetail
+                {
+                    Description = dto.Description,
+                    Location = dto.Location,
+                    SpeakerOrPerformer = dto.SpeakerOrPerformer,
+                    ContactInfo = dto.ContactInfo,
+                    Gallery = dto.Gallery
+                };
+
+                var created = await _eventService.CreateAsync(newEvent, detail);
+                return Ok(created);
+            }
+            catch (Exception ex)
             {
-                Description = dto.Description,
-                Location = dto.Location,
-                SpeakerOrPerformer = dto.SpeakerOrPerformer,
-                ContactInfo = dto.ContactInfo,
-                Gallery = dto.Gallery
-            };
-
-            var created = await _eventService.CreateAsync(newEvent, detail);
-            return Ok(created);
+                return StatusCode(500, new { message = "Lỗi khi tạo sự kiện.", details = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Event updatedEvent)
         {
-            var result = await _eventService.UpdateAsync(id, updatedEvent);
-            if (result == null) return NotFound();
-            return Ok(result);
+            try
+            {
+                var result = await _eventService.UpdateAsync(id, updatedEvent);
+                if (result == null) return NotFound(new { message = "Không tìm thấy sự kiện để cập nhật." });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi cập nhật sự kiện.", details = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleted = await _eventService.DeleteAsync(id);
-            if (!deleted) return NotFound();
-            return NoContent();
+            try
+            {
+                var deleted = await _eventService.DeleteAsync(id);
+                if (!deleted) return NotFound(new { message = "Không tìm thấy sự kiện để xóa." });
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi khi xóa sự kiện.", details = ex.Message });
+            }
         }
     }
 }

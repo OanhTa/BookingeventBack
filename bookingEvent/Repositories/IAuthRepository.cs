@@ -9,6 +9,7 @@ namespace bookingEvent.Repositories
     {
         Task<LoginResponseDto?> Login(string email, string password);
         Task<User?> Register(string username, string email, string password);
+        Task<bool> ChangePasswordAsync(string userId, string passwordCurrent, string passwordNew);
         Task RequestPasswordResetAsync(string email);
         Task<bool> ResetPasswordAsync(string token, string newPassword);
         Task<string> ConfirmEmailAsync(string token);

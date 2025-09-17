@@ -21,18 +21,10 @@ namespace bookingEvent.Services
             _context = context;
         }
 
-        public async Task<bool> UploadImageAsync(IFormFile file, Guid userId)
+        public async Task<string?> UploadImageAsync(IFormFile file, Guid userId)
         {
             if (file == null || file.Length == 0)
-                return false;
-
-            //if (!string.IsNullOrEmpty(user.AvatarUrl))
-            //{
-            //    // Lấy public_id từ URL
-            //    var publicId = GetPublicIdFromUrl(user.AvatarUrl);
-            //    var deletionParams = new DeletionParams(publicId);
-            //    await _cloudinary.DestroyAsync(deletionParams);
-            //}
+                return null;
 
             await using var stream = file.OpenReadStream();
             var uploadParams = new ImageUploadParams
@@ -44,16 +36,26 @@ namespace bookingEvent.Services
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
             if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
-                return false; 
+                return null;
 
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
-                return false; 
+                return null;
+
+            if (!string.IsNullOrEmpty(user.AvatarUrl))
+            {
+                var publicId = GetPublicIdFromUrl(user.AvatarUrl);
+                if (!string.IsNullOrEmpty(publicId))
+                {
+                    var deletionParams = new DeletionParams(publicId);
+                    await _cloudinary.DestroyAsync(deletionParams);
+                }
+            }
 
             user.AvatarUrl = uploadResult.SecureUrl.ToString();
             await _context.SaveChangesAsync();
 
-            return true;
+            return user.AvatarUrl;
         }
         private string GetPublicIdFromUrl(string url)
         {

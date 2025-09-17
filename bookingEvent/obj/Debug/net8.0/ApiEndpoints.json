@@ -6,7 +6,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -37,6 +48,37 @@
         "Name": "search",
         "Type": "bookingEvent.DTO.AuditLogSearchDto",
         "IsRequired": true
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuthController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/Auth/change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "ChangePasswordDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -527,6 +569,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.ReportController",
+    "Method": "GetUserStats",
+    "RelativePath": "api/Report/report-stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.RolesController",
     "Method": "GetAll",
     "RelativePath": "api/Roles",
@@ -675,6 +727,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.SettingsController",
+    "Method": "SetValue",
+    "RelativePath": "api/Settings/set",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SetValueRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.SettingsController",
+    "Method": "SetValues",
+    "RelativePath": "api/Settings/set-values",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "System.Collections.Generic.List\u00601[[SetValueRequest, bookingEvent, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.TicketController",
     "Method": "GetAll",
     "RelativePath": "api/Ticket",
@@ -812,39 +896,18 @@
   {
     "ContainingType": "bookingEvent.Controllers.UploadController",
     "Method": "UploadAvatar",
-    "RelativePath": "api/Upload",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "file",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "userId",
-        "Type": "System.Guid",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "bookingEvent.Controllers.UploadController",
-    "Method": "UploadAvatar",
     "RelativePath": "api/Upload/upload-avatar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "file",
+        "Name": "File",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
-        "Name": "userId",
+        "Name": "UserId",
         "Type": "System.Guid",
         "IsRequired": false
       }
@@ -966,22 +1029,6 @@
       },
       {
         "Name": "roleId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "bookingEvent.Controllers.UsersController",
-    "Method": "GetUserPermissions",
-    "RelativePath": "api/Users/{userId}/permissions",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
         "Type": "System.Guid",
         "IsRequired": true
       }

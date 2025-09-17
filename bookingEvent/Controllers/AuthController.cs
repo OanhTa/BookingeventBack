@@ -1,12 +1,9 @@
-﻿using BCrypt.Net;
+﻿using Azure;
 using bookingEvent.Const;
-using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
 using bookingEvent.Repositories;
 using bookingEvent.Services;
-using bookingEvent.Services.Auth;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookingEvent.Controllers
@@ -27,30 +24,77 @@ namespace bookingEvent.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-            var validateResult = await _authService.Validate(dto.Password);
-            if (!validateResult.IsValid)
+            try
             {
-                return BadRequest(new
+                var validateResult = await _authService.Validate(dto.Password);
+                if (!validateResult.IsValid)
                 {
-                    Message = "Mật khẩu không hợp lệ",
-                    Errors = validateResult.Errors
-                });
-            }
+                    return BadRequest(new
+                    {
+                        Message = validateResult.Errors
+                    });
+                }
 
-            var user = await _authService.Register(dto.UserName, dto.Email, dto.Password);
-            if (user == null) return BadRequest("Email đã tồn tại");
-            return Ok(new { message = "Đăng ký thành công" });
+                var user = await _authService.Register(dto.UserName, dto.Email, dto.Password);
+                if (user == null)
+                {
+                    return Unauthorized(ApiResponse<object>.ErrorResponse("Email đã tồn tại"));
+                }
+                return Ok(ApiResponse<User>.SuccessResponse(user, "Bạn đã đăng ký thành công! Hãy kiểm tra hộp thư để xác nhận tài khoản"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse("Có lỗi xảy ra. Vui lòng thử lại."));
+            }
 
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var response = await _authService.Login(dto.Email, dto.Password);
-            if (response == null)
-                return Unauthorized("Sai tài khoản hoặc mật khẩu");
+            try
+            {
+                var response = await _authService.Login(dto.Email, dto.Password);
+                if (response == null)
+                {
+                    return Unauthorized(ApiResponse<object>.ErrorResponse("Sai tài khoản hoặc mật khẩu"));
+                }
+                return Ok(ApiResponse<LoginResponseDto>.SuccessResponse(response, "Đăng nhập thành công"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ApiResponse<object>.ErrorResponse(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse("Có lỗi xảy ra. Vui lòng thử lại."));
+            }
+        }
 
-            return Ok(response);
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto, [FromQuery] string userId)
+        {
+            var validateResult = await _authService.Validate(dto.PasswordNew);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Message = validateResult.Errors
+                });
+            }
+            try
+            {
+                var response = await _authService.ChangePasswordAsync(userId, dto.PasswordCurrent, dto.PasswordNew);
+                return Ok(ApiResponse<bool>.SuccessResponse(response, "Đổi mật khẩu thành công"));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ApiResponse<object>.ErrorResponse(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<object>.ErrorResponse("Có lỗi xảy ra. Vui lòng thử lại."));
+            }
         }
 
         [HttpPost("request-password-reset")]
@@ -62,7 +106,6 @@ namespace bookingEvent.Controllers
 
             if (preventEmailEnumeration)
             {
-                // Luôn trả message chung
                 return Ok(new { message = "Nếu email tồn tại, kiểm tra mail để  đặt lại mật khẩu" });
             }
             else
@@ -74,11 +117,19 @@ namespace bookingEvent.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
+            var validateResult = await _authService.Validate(dto.NewPassword);
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Message = validateResult.Errors
+                });
+            }
             var success = await _authService.ResetPasswordAsync(dto.Token, dto.NewPassword);
             if (!success)
-                return BadRequest(new { message = "Invalid or expired token." });
+                return BadRequest(new { message = "Mã không hợp lệ hoặc hết hạn." });
 
-            return Ok(new { message = "Password has been successfully reset." });
+            return Ok(new { message = "Đặt lại mật khẩu thành công" });
         }
 
         [HttpGet("confirm-email")]
@@ -108,4 +159,10 @@ public class ResetPasswordDto
 {
     public string Token { get; set; } = null!;
     public string NewPassword { get; set; } = null!;
+}
+
+public class ChangePasswordDto
+{
+    public string PasswordCurrent { get; set; }
+    public string PasswordNew { get; set; }
 }
