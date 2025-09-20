@@ -2294,7 +2294,8 @@
           },
           "organisationId": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "organisation": {
             "$ref": "#/components/schemas/Organisation"
@@ -2378,6 +2379,11 @@
             "format": "uuid",
             "nullable": true
           },
+          "organisationId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
           "description": {
             "type": "string",
             "nullable": true
@@ -2390,17 +2396,19 @@
             "type": "string",
             "nullable": true
           },
-          "ticketQuantity": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "contactInfo": {
             "type": "string",
             "nullable": true
           },
           "gallery": {
             "type": "string",
+            "nullable": true
+          },
+          "ticketTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketType"
+            },
             "nullable": true
           }
         },

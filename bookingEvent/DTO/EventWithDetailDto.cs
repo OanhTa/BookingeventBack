@@ -1,4 +1,6 @@
-﻿namespace bookingEvent.DTO
+﻿using bookingEvent.Model;
+
+namespace bookingEvent.DTO
 {
     public class EventWithDetailDto
     {
@@ -11,13 +13,14 @@
         public string? Thumbnail { get; set; }
         public string? Status { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? OrganisationId { get; set; }
 
         public string Description { get; set; } = string.Empty;
         public string? Location { get; set; }
         public string? SpeakerOrPerformer { get; set; }
-        public int? TicketQuantity { get; set; }
         public string? ContactInfo { get; set; }
         public string? Gallery { get; set; }
+        public ICollection<TicketType> TicketTypes { get; set; } = new List<TicketType>();
     }
 
 }

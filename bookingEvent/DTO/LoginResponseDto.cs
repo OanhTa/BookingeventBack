@@ -1,4 +1,6 @@
-﻿namespace bookingEvent.DTO
+﻿using bookingEvent.Model;
+
+namespace bookingEvent.DTO
 {
     public class LoginResponseDto
     {
@@ -11,5 +13,6 @@
         public string FullName { get; set; }
         public DateTime Expiry { get; set; }
         public List<string> Roles { get; set; }
+        public List<OrganisationUser>? OrganisationUsers { get; set; }
     }
 }

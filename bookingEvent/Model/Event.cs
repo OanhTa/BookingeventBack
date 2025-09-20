@@ -12,14 +12,14 @@ namespace bookingEvent.Model
         public TimeSpan? Time { get; set; }
         public TimeSpan? Duration { get; set; }
         public string? Thumbnail { get; set; }
-        public string? Status { get; set; } //Draft,Active,Cancelled
+        public string? Status { get; set; } = "Active"; //Active,Cancelled
 
         public Guid? CategoryId { get; set; }
-        public Category? Category { get; set; }
+        public Category? Category { get; set;  }
         public EventDetail? EventDetail { get; set; }
         public ICollection<TicketType> TicketTypes { get; set; } = new List<TicketType>();
 
-        public Guid OrganisationId { get; set; }  
-        public Organisation Organisation { get; set; } = null!;
+        public Guid? OrganisationId { get; set; }  
+        public Organisation? Organisation { get; set; } = null!;
     }
 }

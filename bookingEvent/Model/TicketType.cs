@@ -9,7 +9,7 @@
         public int Quantity { get; set; }
         public int Sold { get; set; } = 0;
 
-        public Event Event { get; set; } = null!;
-        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+        public Event? Event { get; set; }
+        public ICollection<Ticket>? Tickets { get; set; } = new List<Ticket>();
     }
 }

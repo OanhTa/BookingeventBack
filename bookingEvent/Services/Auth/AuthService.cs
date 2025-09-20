@@ -109,6 +109,7 @@ namespace bookingEvent.Services.Auth
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
+                .Include(u => u.OrganisationUsers)
                 .FirstOrDefaultAsync(u => u.Email == email || u.UserName == email);
 
             if (!user.EmailConfirmed)
@@ -142,7 +143,8 @@ namespace bookingEvent.Services.Auth
                 Phone = user.Phone,
                 AvatarUrl = user.AvatarUrl,
                 Expiry = user.TokenExpireTime.Value,
-                Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
+                Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
+                OrganisationUsers = user.OrganisationUsers.ToList()
             };
         }
 

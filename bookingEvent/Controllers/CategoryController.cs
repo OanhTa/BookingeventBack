@@ -18,8 +18,8 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [Permission("Identity.Category.Read")]
+        //[Authorize]
+        //[Permission("Identity.Category.Read")]
         public async Task<ActionResult<IEnumerable<Category>>> GetAll()
         {
             try

@@ -87,7 +87,8 @@ namespace bookingEvent.Controllers
                     Duration = dto.Duration,
                     Thumbnail = dto.Thumbnail,
                     Status = dto.Status,
-                    CategoryId = dto.CategoryId
+                    CategoryId = dto.CategoryId,
+                    OrganisationId = dto.OrganisationId
                 };
 
                 var detail = new EventDetail
@@ -98,8 +99,8 @@ namespace bookingEvent.Controllers
                     ContactInfo = dto.ContactInfo,
                     Gallery = dto.Gallery
                 };
-
-                var created = await _eventService.CreateAsync(newEvent, detail);
+                var tickets = dto.TicketTypes;
+                var created = await _eventService.CreateAsync(newEvent, detail, tickets);
                 return Ok(created);
             }
             catch (Exception ex)

@@ -51,7 +51,7 @@ namespace bookingEvent.Services
                 .ToListAsync();
         }
 
-        public async Task<Event> CreateAsync(Event newEvent, EventDetail detail)
+        public async Task<Event> CreateAsync(Event newEvent, EventDetail detail, ICollection<TicketType> tickets)
         {
             newEvent.Id = Guid.NewGuid();
             detail.Id = Guid.NewGuid();
@@ -59,6 +59,17 @@ namespace bookingEvent.Services
 
             await _context.Event.AddAsync(newEvent);
             await _context.EventDetail.AddAsync(detail);
+            if (tickets != null && tickets.Any())
+            {
+                foreach (var ticket in tickets)
+                {
+                    ticket.Id = Guid.NewGuid();
+                    ticket.EventId = newEvent.Id;
+                }
+
+                await _context.TicketType.AddRangeAsync(tickets);
+            }
+
             await _context.SaveChangesAsync();
             return newEvent;
         }
