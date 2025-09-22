@@ -23,14 +23,11 @@ namespace bookingEvent.Services
 
         public async Task<string?> UploadImageAsync(IFormFile file, Guid userId)
         {
-            if (file == null || file.Length == 0)
-                return null;
-
             await using var stream = file.OpenReadStream();
             var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(file.FileName, stream),
-                Folder = "uploads"
+                Folder = "uploads" // upload poster sự kiện vào folder này
             };
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
@@ -57,6 +54,23 @@ namespace bookingEvent.Services
 
             return user.AvatarUrl;
         }
+
+        public async Task<string?> UploadPosterTempAsync(IFormFile file)
+        {
+            await using var stream = file.OpenReadStream();
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(file.FileName, stream),
+                Folder = "thumbraind"
+            };
+
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            return uploadResult.StatusCode == System.Net.HttpStatusCode.OK
+                ? uploadResult.SecureUrl.ToString()
+                : null;
+        }
+
         private string GetPublicIdFromUrl(string url)
         {
             var uri = new Uri(url);

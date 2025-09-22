@@ -44,7 +44,8 @@ namespace bookingEvent.Services
                     Id = rp.Permission.Id,
                     Name = rp.Permission.Name,
                     Description = rp.Permission.Description,
-                    IsGranted = rp.IsGranted
+                    IsGranted = rp.IsGranted,
+                    FromRole = true  // ✅ đánh dấu quyền này đến từ role
                 })
                 .ToListAsync();
 
@@ -56,19 +57,21 @@ namespace bookingEvent.Services
                     Id = up.Permission.Id,
                     Name = up.Permission.Name,
                     Description = up.Permission.Description,
-                    IsGranted = up.IsGranted
+                    IsGranted = up.IsGranted,
+                    FromRole = false // ✅ quyền này gán trực tiếp cho user
                 })
                 .ToListAsync();
 
-            // Hợp nhất 2 list, loại trùng theo Id
+            // Hợp nhất 2 list, ưu tiên userPermissions nếu trùng
             var allPermissions = rolePermissions
                 .Concat(userPermissions)
                 .GroupBy(p => p.Id)
-                .Select(g => g.First()) // nếu trùng thì lấy 1 cái
+                .Select(g => g.OrderBy(p => p.FromRole).First()) // nếu trùng → lấy bản user trước
                 .ToList();
 
             return allPermissions;
         }
+
 
         public async Task GrantUserPermissionsAsync(Guid userId, List<string> permissionNames)
         {

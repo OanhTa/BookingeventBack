@@ -295,6 +295,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "bookingEvent.Controllers.EventsController",
+    "Method": "Search",
+    "RelativePath": "api/Events/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "bookingEvent.Controllers.OrganisationController",
     "Method": "Create",
     "RelativePath": "api/Organisation",
@@ -909,6 +925,22 @@
       {
         "Name": "UserId",
         "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.UploadController",
+    "Method": "UploadEventPoster",
+    "RelativePath": "api/Upload/upload-poster",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       }
     ],

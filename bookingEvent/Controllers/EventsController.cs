@@ -30,6 +30,24 @@ namespace bookingEvent.Controllers
             }
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string keyword)
+        {
+            try
+            {
+                var events = await _eventService.SearchAsync(keyword);
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "Lỗi khi tìm kiếm sự kiện.",
+                    details = ex.Message
+                });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
