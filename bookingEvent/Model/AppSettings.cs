@@ -2,7 +2,7 @@
 
 namespace bookingEvent.Model
 {
-    public class AppSettings
+    public class AppSettings : BaseEntity
     {
         [Key]
         public Guid Id { get; set; } // Khóa chính duy nhất cho mỗi setting

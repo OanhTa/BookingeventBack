@@ -1,6 +1,6 @@
 ﻿namespace bookingEvent.Model
 {
-    public class OrganisationUser
+    public class OrganisationUser : BaseEntity
     {
         public Guid OrganisationId { get; set; }
         public Guid UserId { get; set; }

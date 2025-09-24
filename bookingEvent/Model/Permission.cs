@@ -1,6 +1,6 @@
 ﻿namespace bookingEvent.Model
 {
-    public class Permission
+    public class Permission : BaseEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!; // vd: "Identity.Users.Create"

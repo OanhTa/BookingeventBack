@@ -34,13 +34,20 @@ namespace bookingEvent.Controllers
                 return Ok(orgs);
             }
 
-            [HttpGet("by-user/{userId}")]
-            public async Task<IActionResult> GetOrganisationsByUser(Guid userId)
+            [HttpGet("users-by-organisation")]
+            public async Task<IActionResult> GetUsersByOrganisation(Guid orgId)
             {
-                var orgs = await _orgService.GetOrganisationsByUserAsync(userId);
-    
-                return Ok(orgs);
+                var users = await _orgService.GetUsersByOrganisationAsync(orgId);
+                return Ok(users);
             }
+
+            [HttpGet("by-user/{userId}")]
+                public async Task<IActionResult> GetOrganisationsByUser(Guid userId)
+                {
+                    var orgs = await _orgService.GetOrganisationsByUserAsync(userId);
+    
+                    return Ok(orgs);
+                }
 
 
             [HttpPut("{id}")]

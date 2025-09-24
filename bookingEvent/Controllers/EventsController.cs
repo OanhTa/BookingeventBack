@@ -31,7 +31,7 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery] string keyword)
+        public async Task<IActionResult> Search([FromQuery] string? keyword)
         {
             try
             {

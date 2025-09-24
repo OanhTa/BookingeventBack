@@ -2,7 +2,7 @@
 
 namespace bookingEvent.Model
 {
-    public class Organisation
+    public class Organisation : BaseEntity
     {
         [Key]
         public Guid Id { get; set; }

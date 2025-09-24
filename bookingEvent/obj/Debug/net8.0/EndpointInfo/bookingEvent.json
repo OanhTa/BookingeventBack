@@ -2324,8 +2324,7 @@
             "nullable": true
           },
           "status": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/EventStatus"
           },
           "categoryId": {
             "type": "string",
@@ -2393,6 +2392,18 @@
         },
         "additionalProperties": false
       },
+      "EventStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "EventWithDetailDto": {
         "type": "object",
         "properties": {
@@ -2424,8 +2435,7 @@
             "nullable": true
           },
           "status": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/EventStatus"
           },
           "categoryId": {
             "type": "string",

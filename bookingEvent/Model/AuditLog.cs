@@ -2,7 +2,7 @@
 
 namespace bookingEvent.Model
 {
-    public class AuditLog
+    public class AuditLog : BaseEntity
     {
         [Key]
         public Guid Id { get; set; }

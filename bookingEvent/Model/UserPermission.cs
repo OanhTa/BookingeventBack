@@ -1,6 +1,6 @@
 ﻿namespace bookingEvent.Model
 {
-    public class UserPermission
+    public class UserPermission : BaseEntity
     {
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;

@@ -12,7 +12,7 @@ namespace bookingEvent.Model
         public TimeSpan? Time { get; set; }
         public TimeSpan? Duration { get; set; }
         public string? Thumbnail { get; set; }
-        public string? Status { get; set; } = "Active"; //Active,Cancelled
+        public EventStatus Status { get; set; } = EventStatus.Draft;
 
         public Guid? CategoryId { get; set; }
         public Category? Category { get; set;  }
@@ -22,4 +22,13 @@ namespace bookingEvent.Model
         public Guid? OrganisationId { get; set; }  
         public Organisation? Organisation { get; set; } = null!;
     }
+}
+public enum EventStatus
+{
+    Draft = 0,        // Nháp - tạo xong nhưng chưa công khai
+    Published = 1,    // Đã xuất bản - đang hiển thị cho khách
+    Ongoing = 2,      // Đang diễn ra
+    Completed = 3,    // Đã kết thúc
+    Cancelled = 4,    // Đã hủy
+    Archived = 5      // Đã lưu trữ
 }

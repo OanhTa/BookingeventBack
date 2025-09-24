@@ -3,7 +3,7 @@
 
 namespace bookingEvent.Model
 {
-    public class EventDetail
+    public class EventDetail : BaseEntity
     {
         [Key]
         public Guid Id { get; set; }

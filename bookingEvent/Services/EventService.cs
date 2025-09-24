@@ -22,16 +22,18 @@ namespace bookingEvent.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Event>> SearchAsync(string keyword)
+        public async Task<IEnumerable<Event>> SearchAsync(string? keyword)
         {
             if (string.IsNullOrWhiteSpace(keyword))
-                return await _context.Event.ToListAsync();
+                return await GetAllAsync();
 
             keyword = keyword.Trim().ToLower();
 
             return await _context.Event
+                .Include(e => e.EventDetail)
+                .Include(e => e.TicketTypes)
                 .Where(e => e.Name.ToLower().Contains(keyword)
-                         || e.Status.ToLower().Contains(keyword))
+                         || e.Status.ToString().Contains(keyword))
                 .ToListAsync();
         }
 

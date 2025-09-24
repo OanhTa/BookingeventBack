@@ -51,6 +51,21 @@ namespace bookingEvent.Services
                 .ToListAsync<object>();
         }
 
+        public async Task<List<object>> GetUsersByOrganisationAsync(Guid orgId)
+        {
+            return await _context.OrganisationUser
+                .Where(ou => ou.OrganisationId == orgId)
+                .Include(ou => ou.User)
+                .Select(ou => new
+                {
+                    ou.User.Id,
+                    ou.User.UserName,
+                    ou.User.Email,
+                    Role = ou.RoleInOrg
+                })
+                .ToListAsync<object>();
+        }
+
         public async Task<Organisation?> UpdateOrganisationAsync(Guid id, CreateOrganisationDto dto, Guid userId)
         {
             var org = await _context.Organisation.FirstOrDefaultAsync(o => o.Id == id && o.OwnerId == userId);

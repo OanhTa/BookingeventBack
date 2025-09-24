@@ -11,7 +11,7 @@ namespace bookingEvent.DTO
         public TimeSpan? Time { get; set; }
         public TimeSpan? Duration { get; set; }
         public string? Thumbnail { get; set; }
-        public string? Status { get; set; }
+        public EventStatus Status { get; set; } = EventStatus.Draft;
         public Guid? CategoryId { get; set; }
         public Guid? OrganisationId { get; set; }
 

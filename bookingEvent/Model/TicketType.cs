@@ -1,6 +1,6 @@
 ﻿namespace bookingEvent.Model
 {
-    public class TicketType
+    public class TicketType : BaseEntity
     {
         public Guid Id { get; set; }
         public Guid EventId { get; set; }

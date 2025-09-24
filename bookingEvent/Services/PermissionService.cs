@@ -102,9 +102,7 @@ namespace bookingEvent.Services
 
             await _context.SaveChangesAsync();
         }
-
-      
-    
+       
         public async Task RevokeUserPermissionsAsync(Guid userId, List<string> permissionNames)
          {
                 var permissions = await _context.Permissions

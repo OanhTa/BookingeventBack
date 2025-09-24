@@ -1,14 +1,25 @@
 ﻿using bookingEvent.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookingEvent.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ApplicationDbContext(
+            DbContextOptions<ApplicationDbContext> options,
+            IHttpContextAccessor httpContextAccessor
+            ) : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
 
         }
+
         public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -26,6 +37,28 @@ namespace bookingEvent.Data
         public DbSet<TicketType> TicketType { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
 
+        private string CurrentUserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "Anonymous";
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = CurrentUserName;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedBy = CurrentUserName;
+                }
+            }
+
+            return base.SaveChanges();
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -67,7 +100,7 @@ namespace bookingEvent.Data
             {
                 entity.HasKey(ed => ed.Id);
                 entity.Property(ed => ed.Description)
-                      .HasMaxLength(1000);
+                      .HasColumnType("nvarchar(max)");
 
                 entity.HasOne(ed => ed.Event)
                       .WithOne(e => e.EventDetail)
