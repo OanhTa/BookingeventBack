@@ -5060,23 +5060,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {},
+    "C:\\Users\\anhmi\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj",
+      "projectUniqueName": "F:\\angular\\du_an_ban_ve_sk\\BookingeventBack\\bookingEvent\\bookingEvent.csproj",
       "projectName": "bookingEvent",
-      "projectPath": "D:\\bookingEventBack\\bookingEvent\\bookingEvent.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\bookingEventBack\\bookingEvent\\obj\\",
+      "projectPath": "F:\\angular\\du_an_ban_ve_sk\\BookingeventBack\\bookingEvent\\bookingEvent.csproj",
+      "packagesPath": "C:\\Users\\anhmi\\.nuget\\packages\\",
+      "outputPath": "F:\\angular\\du_an_ban_ve_sk\\BookingeventBack\\bookingEvent\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\anhmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5159,7 +5159,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

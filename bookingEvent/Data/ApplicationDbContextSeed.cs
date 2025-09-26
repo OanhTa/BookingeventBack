@@ -7,9 +7,9 @@ namespace bookingEvent.Data
     {
         public static async Task SeedAsync(ApplicationDbContext context)
         {
-                var permissions = new List<Permission>
+            var permissions = new List<Permission>
                 {
-               
+
                     new Permission { Id = Guid.NewGuid(), Name = Permissions.Users.Create, Description = "Create users" },
                     new Permission { Id = Guid.NewGuid(), Name = Permissions.Users.Read, Description = "View users" },
                     new Permission { Id = Guid.NewGuid(), Name = Permissions.Users.Update, Description = "Update users" },
@@ -36,14 +36,14 @@ namespace bookingEvent.Data
                     new Permission { Id = Guid.NewGuid(), Name = Permissions.AuditLogs.Export, Description = "Export audit logs" }
                 };
 
-                foreach (var perm in permissions)
+            foreach (var perm in permissions)
+            {
+                if (!context.Permissions.Any(p => p.Name == perm.Name))
                 {
-                    if (!context.Permissions.Any(p => p.Name == perm.Name))
-                    {
-                        context.Permissions.Add(perm);
-                    }
+                    context.Permissions.Add(perm);
                 }
-                await context.SaveChangesAsync();
             }
+            await context.SaveChangesAsync();
+        }
     }
 }

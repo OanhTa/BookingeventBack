@@ -48,6 +48,7 @@ namespace bookingEvent.Services.Auth
 
             claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claims.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+            claims.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 
             // quyền riêng của user
             foreach (var up in user.UserPermissions)
@@ -72,7 +73,7 @@ namespace bookingEvent.Services.Auth
         public async Task<User?> Register(string username, string email, string password)
         {
             var isSelfRegistrationEnabled = await _settingService.IsTrueAsync(AppSettingNames.IsSelfRegistrationEnabled);
-            if (isSelfRegistrationEnabled)
+            if (!isSelfRegistrationEnabled) // sửa lại: chỉ cho phép khi setting = true
             {
                 throw new InvalidOperationException("Tự đăng ký tài khoản đã bị vô hiệu hóa.");
             }
@@ -95,8 +96,8 @@ namespace bookingEvent.Services.Auth
 
         public async Task<LoginResponseDto?> Login(string email, string password)
         {
-            var enableLocalLogin = await _settingService.IsTrueAsync(AppSettingNames.EnableLocalLogin);
-            if (enableLocalLogin)
+            var enableLocalLogin = await _settingService.IsTrueAsync(AppSettingNames.EnableLocalLogin, "G"); 
+            if (!enableLocalLogin) // sửa lại: chỉ cho phép khi setting = true
             {
                 throw new InvalidOperationException("Đăng nhập bằng tài khoản nội bộ đã bị vô hiệu hóa.");
             }
@@ -110,10 +111,11 @@ namespace bookingEvent.Services.Auth
             if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) return null;
 
             var token = GenerateToken(user);
+            var expiry = DateTime.UtcNow.AddMinutes(AuthSettings.AccessTokenExpiryMinutes);
 
-            // cập nhật hạn token 7 ngày
+            // cập nhật hạn token đồng nhất với JWT
             user.AccessToken = token;
-            user.TokenExpireTime = DateTime.UtcNow.AddDays(7);
+            user.TokenExpireTime = expiry;
             await _context.SaveChangesAsync();
 
             return new LoginResponseDto
@@ -122,7 +124,7 @@ namespace bookingEvent.Services.Auth
                 UserId = user.Id,
                 Email = user.Email,
                 FullName = user.UserName,
-                Expiry = user.TokenExpireTime.Value,
+                Expiry = expiry,
                 Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
             };
         }
@@ -130,7 +132,7 @@ namespace bookingEvent.Services.Auth
         public async Task RequestPasswordResetAsync(string email)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null) return; 
+            if (user == null) return;
 
             var token = Guid.NewGuid().ToString();
 

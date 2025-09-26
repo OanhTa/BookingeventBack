@@ -1,12 +1,12 @@
-﻿using BCrypt.Net;
-using bookingEvent.Const;
+﻿using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
 using bookingEvent.Services;
 using bookingEvent.Services.Auth;
-using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace bookingEvent.Controllers
 {
@@ -24,22 +24,42 @@ namespace bookingEvent.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             var user = await _authService.Register(dto.UserName, dto.Email, dto.Password);
             if (user == null) return BadRequest("Email đã tồn tại");
             return Ok(new { message = "Đăng ký thành công" });
-
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var response = await _authService.Login(dto.Email, dto.Password);
             if (response == null)
                 return Unauthorized("Sai tài khoản hoặc mật khẩu");
 
             return Ok(response);
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public IActionResult Me()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.Identity?.Name;
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var roles = User.Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
+
+            return Ok(new
+            {
+                Id = userId,
+                UserName = username,
+                Email = email,
+                Roles = roles
+            });
         }
 
         [HttpPost("request-password-reset")]
@@ -52,11 +72,11 @@ namespace bookingEvent.Controllers
             if (preventEmailEnumeration)
             {
                 // Luôn trả message chung
-                return Ok(new { message = "Nếu email tồn tại, kiểm tra mail để  đặt lại mật khẩu" });
+                return Ok(new { message = "Nếu email tồn tại, kiểm tra mail để đặt lại mật khẩu" });
             }
             else
             {
-                return Ok(new { message = "Kiểm tra mail để  đặt lại mật khẩu." });
+                return Ok(new { message = "Kiểm tra mail để đặt lại mật khẩu." });
             }
         }
 
@@ -69,7 +89,6 @@ namespace bookingEvent.Controllers
 
             return Ok(new { message = "Password has been successfully reset." });
         }
-
     }
 }
 
@@ -77,7 +96,6 @@ public class RequestPasswordResetDto
 {
     public string Email { get; set; } = null!;
 }
-
 
 public class ResetPasswordDto
 {

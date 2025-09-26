@@ -26,9 +26,23 @@ namespace bookingEvent.Data
         public DbSet<TicketType> TicketType { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
 
+        public DbSet<CheckoutModel> thanhtoan { get; set; }
+
+
+        //internal static void SeedAsyns(ApplicationDbContext dbContext)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CheckoutModel>(entity =>
+            {
+                entity.ToTable("thanhtoan"); // tên bảng trong database
+                
+            });
 
             modelBuilder.Entity<Role>()
                .HasIndex(r => r.Name)

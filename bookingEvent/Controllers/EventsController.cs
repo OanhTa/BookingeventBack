@@ -60,7 +60,7 @@ namespace bookingEvent.Controllers
                 CategoryId = dto.CategoryId
             };
 
-            var detail = new EventDetail
+            var detail = new    EventDetail
             {
                 Description = dto.Description,
                 Location = dto.Location,

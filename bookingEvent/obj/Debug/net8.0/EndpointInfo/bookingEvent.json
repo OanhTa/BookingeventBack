@@ -139,6 +139,18 @@
         }
       }
     },
+    "/api/Auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/request-password-reset": {
       "post": {
         "tags": [
@@ -235,6 +247,60 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Checkout": {
+      "post": {
+        "tags": [
+          "Checkout"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Checkout/{id}": {
+      "get": {
+        "tags": [
+          "Checkout"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1662,6 +1728,71 @@
           }
         }
       }
+    },
+    "/api/Users/lock/{userId}": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LockUserRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LockUserRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LockUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users/unlock/{userId}": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1812,6 +1943,68 @@
               "$ref": "#/components/schemas/Event"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckoutDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ho": {
+            "type": "string",
+            "nullable": true
+          },
+          "ten": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "quocGia": {
+            "type": "string",
+            "nullable": true
+          },
+          "thanhpho": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip": {
+            "type": "string",
+            "nullable": true
+          },
+          "soThe": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayHetHan": {
+            "type": "string",
+            "nullable": true
+          },
+          "cvv": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiamGia": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tongTien": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -2046,6 +2239,16 @@
           "gallery": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LockUserRequest": {
+        "type": "object",
+        "properties": {
+          "lockEnd": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

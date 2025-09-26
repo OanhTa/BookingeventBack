@@ -59,6 +59,16 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.AuthController",
+    "Method": "Me",
+    "RelativePath": "api/Auth/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.AuthController",
     "Method": "Register",
     "RelativePath": "api/Auth/register",
     "HttpMethod": "POST",
@@ -124,6 +134,38 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CheckoutController",
+    "Method": "CreateCheckout",
+    "RelativePath": "api/Checkout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "bookingEvent.DTO.CheckoutDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CheckoutController",
+    "Method": "GetCheckout",
+    "RelativePath": "api/Checkout/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "bookingEvent.Controllers.EventsController",
@@ -932,6 +974,27 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.UsersController",
+    "Method": "LockUser",
+    "RelativePath": "api/Users/lock/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "LockUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.UsersController",
     "Method": "Search",
     "RelativePath": "api/Users/search",
     "HttpMethod": "POST",
@@ -958,6 +1021,22 @@
         "Name": "keyword",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.UsersController",
+    "Method": "UnlockUser",
+    "RelativePath": "api/Users/unlock/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

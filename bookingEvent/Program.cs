@@ -37,6 +37,7 @@ builder.Services.AddScoped<CategoryServices>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<TicketService >();
 builder.Services.AddScoped<OrganisationService >();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -104,12 +105,12 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// ✅ Seed dữ liệu ngay sau khi build app
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await ApplicationDbContextSeed.SeedAsync(dbContext);
+    //ApplicationDbContext.SeedAsyns(dbContext); // dùng await trực tiếp
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
