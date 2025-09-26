@@ -1,5 +1,6 @@
 ﻿using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using bookingEvent.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,9 @@ namespace bookingEvent.Controllers
     [Route("api/[controller]")]
     public class EventsController : ControllerBase
     {
-        private readonly EventService _eventService;
+        private readonly IEventRepository _eventService;
 
-        public EventsController(EventService eventService)
+        public EventsController(IEventRepository eventService)
         {
             _eventService = eventService;
         }
@@ -64,11 +65,11 @@ namespace bookingEvent.Controllers
         }
 
         [HttpGet("by-org/{orgId}")]
-        public async Task<IActionResult> GetByOrganisation(Guid orgId)
+        public async Task<IActionResult> GetByOrganisation(Guid orgId, [FromQuery] EventStatus? status)
         {
             try
             {
-                var events = await _eventService.GetEventsByOrganisationAsync(orgId);
+                var events = await _eventService.GetEventsByOrganisationAsync(orgId, status);
                 return Ok(events);
             }
             catch (Exception ex)

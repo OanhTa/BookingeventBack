@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bookingEvent.Data;
 
@@ -11,9 +12,11 @@ using bookingEvent.Data;
 namespace bookingEvent.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250925020238_update-eventdetail")]
+    partial class updateeventdetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,75 +250,6 @@ namespace bookingEvent.Migrations
                     b.ToTable("EventDetail");
                 });
 
-            modelBuilder.Entity("bookingEvent.Model.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("OrganisationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganisationId");
-
-                    b.ToTable("Notification");
-                });
-
-            modelBuilder.Entity("bookingEvent.Model.NotificationReader", b =>
-                {
-                    b.Property<Guid>("NotificationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("NotificationId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("NotificationReader");
-                });
-
             modelBuilder.Entity("bookingEvent.Model.Organisation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -368,11 +302,9 @@ namespace bookingEvent.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleInOrg")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("RoleInOrg")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -729,36 +661,6 @@ namespace bookingEvent.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("bookingEvent.Model.Notification", b =>
-                {
-                    b.HasOne("bookingEvent.Model.Organisation", "Organisation")
-                        .WithMany()
-                        .HasForeignKey("OrganisationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organisation");
-                });
-
-            modelBuilder.Entity("bookingEvent.Model.NotificationReader", b =>
-                {
-                    b.HasOne("bookingEvent.Model.Notification", "Notification")
-                        .WithMany("Readers")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("bookingEvent.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Notification");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("bookingEvent.Model.Organisation", b =>
                 {
                     b.HasOne("bookingEvent.Model.User", "Owner")
@@ -892,11 +794,6 @@ namespace bookingEvent.Migrations
                     b.Navigation("EventDetail");
 
                     b.Navigation("TicketTypes");
-                });
-
-            modelBuilder.Entity("bookingEvent.Model.Notification", b =>
-                {
-                    b.Navigation("Readers");
                 });
 
             modelBuilder.Entity("bookingEvent.Model.Organisation", b =>

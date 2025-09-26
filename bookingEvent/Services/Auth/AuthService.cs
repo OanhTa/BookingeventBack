@@ -129,6 +129,7 @@ namespace bookingEvent.Services.Auth
 
             // cập nhật hạn token 7 ngày
             user.AccessToken = token;
+            user.LoginAt = DateTime.UtcNow;
             user.TokenExpireTime = DateTime.UtcNow.AddDays(7);
             user.AccessFailedCount = 0;
             await _context.SaveChangesAsync();

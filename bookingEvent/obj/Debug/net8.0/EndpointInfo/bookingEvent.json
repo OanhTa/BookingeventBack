@@ -500,6 +500,13 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EventStatus"
+            }
           }
         ],
         "responses": {
@@ -525,6 +532,90 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notification/my": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notification/read/{notificationId}": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notification/create": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -563,10 +654,63 @@
         }
       }
     },
+    "/api/Organisation/invite-user": {
+      "post": {
+        "tags": [
+          "Organisation"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteUserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteUserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Organisation/my-organisation": {
       "get": {
         "tags": [
           "Organisation"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Organisation/users-by-organisation": {
+      "get": {
+        "tags": [
+          "Organisation"
+        ],
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -2060,6 +2204,23 @@
       "AuditLog": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2193,6 +2354,23 @@
       "Category": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2221,6 +2399,27 @@
           "passwordNew": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {
+          "organisationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/NotificationType"
           }
         },
         "additionalProperties": false
@@ -2358,6 +2557,23 @@
       "EventDetail": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2372,6 +2588,9 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/EventType"
           },
           "location": {
             "type": "string",
@@ -2400,6 +2619,15 @@
           3,
           4,
           5
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "EventType": {
+        "enum": [
+          0,
+          1,
+          2
         ],
         "type": "integer",
         "format": "int32"
@@ -2477,6 +2705,23 @@
         },
         "additionalProperties": false
       },
+      "InviteUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "orgId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roleInOrg": {
+            "$ref": "#/components/schemas/OrganisationUserRole"
+          }
+        },
+        "additionalProperties": false
+      },
       "LockUserRequest": {
         "type": "object",
         "properties": {
@@ -2515,9 +2760,35 @@
         },
         "additionalProperties": false
       },
+      "NotificationType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Organisation": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2561,6 +2832,23 @@
       "OrganisationUser": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "organisationId": {
             "type": "string",
             "format": "uuid"
@@ -2570,8 +2858,10 @@
             "format": "uuid"
           },
           "roleInOrg": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/OrganisationUserRole"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrganisationUserStatus"
           },
           "organisation": {
             "$ref": "#/components/schemas/Organisation"
@@ -2582,9 +2872,45 @@
         },
         "additionalProperties": false
       },
+      "OrganisationUserRole": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "OrganisationUserStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Permission": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2645,6 +2971,23 @@
       "Role": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2677,6 +3020,23 @@
       "RolePermission": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "roleId": {
             "type": "string",
             "format": "uuid"
@@ -2736,6 +3096,23 @@
       "Ticket": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2781,6 +3158,23 @@
       "TicketType": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -2947,12 +3341,17 @@
             "format": "date-time",
             "nullable": true
           },
+          "isDelete": {
+            "type": "boolean",
+            "nullable": true
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
           },
-          "isDelete": {
-            "type": "boolean",
+          "loginAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "userRoles": {
@@ -3046,6 +3445,23 @@
       "UserPermission": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "userId": {
             "type": "string",
             "format": "uuid"
@@ -3069,6 +3485,23 @@
       "UserRole": {
         "type": "object",
         "properties": {
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "userId": {
             "type": "string",
             "format": "uuid"

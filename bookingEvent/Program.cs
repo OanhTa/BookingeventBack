@@ -3,13 +3,11 @@ using bookingEvent.Infrastructure.Middlewares;
 using bookingEvent.Mapping;
 using bookingEvent.Repositories;
 using bookingEvent.Services;
-using bookingEvent.Repositories;
 using bookingEvent.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -28,21 +26,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+
 // Đăng ký service
 builder.Services.AddScoped<IAuthRepository, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserService>();
 builder.Services.AddScoped<IRoleRepository, RoleService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionService>();
 builder.Services.AddScoped<IAuditLogRepository, AuditLogService>();
+builder.Services.AddScoped<IOrganisationRepository, OrganisationService>();
+builder.Services.AddScoped<IEventRepository, EventService>();
 
+builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<AppSettingService>();
 builder.Services.AddScoped<AuditLogService>();
 builder.Services.AddScoped<CategoryServices>();
-builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<TicketService >();
-builder.Services.AddScoped<OrganisationService >();
 builder.Services.AddScoped<CloudinaryService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));

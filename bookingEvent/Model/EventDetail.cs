@@ -11,9 +11,17 @@ namespace bookingEvent.Model
         public Event Event { get; set; }
         public string Description { get; set; }
 
+        public EventType Type { get; set; } = EventType.Online;
         public string? Location { get; set; }
         public string? SpeakerOrPerformer { get; set; }
         public string? ContactInfo { get; set; }
         public string? Gallery { get; set; }
     }
+}
+
+public enum EventType
+{
+    Online = 0,
+    Offline = 1,
+    Hybrid = 2
 }

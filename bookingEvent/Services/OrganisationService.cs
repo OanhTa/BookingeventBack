@@ -2,19 +2,36 @@
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace bookingEvent.Services
 {
-    public class OrganisationService
+    public class OrganisationService : IOrganisationRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly EmailService _emailService;
+        private readonly NotificationService _notificationService;
 
-        public OrganisationService(ApplicationDbContext context, IMapper mapper)
+        public OrganisationService(ApplicationDbContext context, IMapper mapper, EmailService emailService, NotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
+            _emailService = emailService;
+            _notificationService = notificationService;
+        }
+
+        public static string GetRoleText(OrganisationUserRole role)
+        {
+            return role switch
+            {
+                OrganisationUserRole.Owner => "Chủ sở hữu",
+                OrganisationUserRole.Manager => "Quản lý",
+                OrganisationUserRole.Staff => "Thành viên",
+                _ => "Không xác định"
+            };
         }
 
         public async Task<Organisation> CreateOrganisationAsync(CreateOrganisationDto dto, Guid userId)
@@ -28,11 +45,53 @@ namespace bookingEvent.Services
             {
                 OrganisationId = organisation.Id,
                 UserId = userId,
-                RoleInOrg = "Owner"
+                RoleInOrg = OrganisationUserRole.Owner
             });
 
             await _context.SaveChangesAsync();
             return organisation;
+        }
+
+        public async Task<bool> InviteUserAsync(InviteUserDto dto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.email);
+            if (user == null)
+                return false;
+
+            var organisation = await _context.Organisation.FirstOrDefaultAsync(o => o.Id == dto.orgId);
+            if (organisation == null)
+                return false;
+
+            _context.OrganisationUser.Add(new OrganisationUser
+            {
+                OrganisationId = dto.orgId,
+                UserId = user.Id,
+                RoleInOrg = dto.RoleInOrg,
+                Status = OrganisationUserStatus.Pending,
+            });
+
+            var token = Guid.NewGuid().ToString();
+            var inviteLink = $"http://localhost:4200/invite-member?token={token}";
+
+            var subject = "Lời mời tham gia tổ chức";
+            var body = $@"
+                Xin chào {user.FullName},<br/><br/>
+                Bạn đã được mời tham gia tổ chức <b>{organisation.Name}</b> với vai trò <b>{GetRoleText(dto.RoleInOrg)}</b>.<br/>
+                Vui lòng click vào link sau để chấp nhận lời mời:<br/>
+                <a href='{inviteLink}'>Tham gia ngay</a><br/><br/>
+                Nếu bạn không muốn tham gia, vui lòng bỏ qua email này.
+            ";
+
+            await _emailService.SendEmailAsync(user.Email, subject, body);
+
+            var notification = await _notificationService.CreateNotificationAsync(
+                dto.orgId, 
+                "Thành viên mới trong tổ chức",
+                $"Người dùng {user.FullName} đã được mời tham gia tổ chức với vai trò {GetRoleText(dto.RoleInOrg)}.",
+                NotificationType.General
+            );
+
+            return await _context.SaveChangesAsync() > 0;
         }
 
 
@@ -61,7 +120,9 @@ namespace bookingEvent.Services
                     ou.User.Id,
                     ou.User.UserName,
                     ou.User.Email,
-                    Role = ou.RoleInOrg
+                    ou.User.LoginAt,
+                    ou.Status,
+                    Role = ou.RoleInOrg,
                 })
                 .ToListAsync<object>();
         }

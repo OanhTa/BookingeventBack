@@ -274,6 +274,11 @@
         "Name": "orgId",
         "Type": "System.Guid",
         "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -305,6 +310,59 @@
       {
         "Name": "keyword",
         "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.NotificationController",
+    "Method": "CreateNotification",
+    "RelativePath": "api/Notification/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CreateNotificationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.NotificationController",
+    "Method": "GetMyNotifications",
+    "RelativePath": "api/Notification/my",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.NotificationController",
+    "Method": "MarkAsRead",
+    "RelativePath": "api/Notification/read/{notificationId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
         "IsRequired": false
       }
     ],
@@ -381,12 +439,44 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.OrganisationController",
+    "Method": "InviteUser",
+    "RelativePath": "api/Organisation/invite-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "bookingEvent.DTO.InviteUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.OrganisationController",
     "Method": "GetMy",
     "RelativePath": "api/Organisation/my-organisation",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.OrganisationController",
+    "Method": "GetUsersByOrganisation",
+    "RelativePath": "api/Organisation/users-by-organisation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orgId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

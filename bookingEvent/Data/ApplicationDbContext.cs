@@ -37,8 +37,11 @@ namespace bookingEvent.Data
         public DbSet<TicketType> TicketType { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
 
+        public DbSet<Notification> Notification { get; set; }
+        public DbSet<NotificationReader> NotificationReader { get; set; }
+
         private string CurrentUserName => _httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "Anonymous";
-        public override int SaveChanges()
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker.Entries<BaseEntity>();
 
@@ -57,8 +60,9 @@ namespace bookingEvent.Data
                 }
             }
 
-            return base.SaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -137,6 +141,20 @@ namespace bookingEvent.Data
                 .HasForeignKey(ou => ou.OrganisationId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<NotificationReader>()
+                .HasOne(r => r.Notification)
+                .WithMany(n => n.Readers)
+                .HasForeignKey(r => r.NotificationId)
+                .OnDelete(DeleteBehavior.Cascade); 
+
+            modelBuilder.Entity<NotificationReader>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<NotificationReader>()
+                .HasKey(r => new { r.NotificationId, r.UserId });
         }
     }
 }

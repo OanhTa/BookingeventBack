@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using bookingEvent.Data;
 using bookingEvent.Model;
+using bookingEvent.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace bookingEvent.Services
 {
-    public class EventService
+    public class EventService : IEventRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -41,21 +42,26 @@ namespace bookingEvent.Services
         {
             return await _context.Event
                 .Include(e => e.EventDetail)
+                .Include(e => e.TicketTypes)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        // Lấy event theo Organisation
-        public async Task<List<Event>> GetEventsByOrganisationAsync(Guid organisationId)
+        public async Task<List<Event>> GetEventsByOrganisationAsync(Guid organisationId, EventStatus? status = null)
         {
-            return await _context.Event
+            var query = _context.Event
                 .Include(e => e.Category)
                 .Include(e => e.EventDetail)
                 .Include(e => e.TicketTypes)
-                .Where(e => e.OrganisationId == organisationId)
-                .ToListAsync();
+                .Where(e => e.OrganisationId == organisationId);
+
+            if (status.HasValue)
+            {
+                query = query.Where(e => e.Status == status.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
-        // Lấy event theo User
         public async Task<List<Event>> GetEventsByUserAsync(Guid userId)
         {
             return await _context.OrganisationUser
@@ -112,9 +118,23 @@ namespace bookingEvent.Services
             var ev = await _context.Event.FindAsync(id);
             if (ev == null) return false;
 
-            _context.Event.Remove(ev);
+            if (ev.Status == EventStatus.Draft) 
+            {
+                _context.Event.Remove(ev);      
+            }
+            else if (ev.Status == EventStatus.Published) 
+            {
+                ev.Status = EventStatus.Cancelled;       // Hủy sự kiện
+                _context.Event.Update(ev);               // Cập nhật status
+            }
+            else
+            {
+                return false;
+            }
+
             await _context.SaveChangesAsync();
             return true;
         }
+
     }
 }
