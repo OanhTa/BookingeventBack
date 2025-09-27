@@ -370,22 +370,6 @@
   },
   {
     "ContainingType": "bookingEvent.Controllers.OrganisationController",
-    "Method": "Create",
-    "RelativePath": "api/Organisation",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "bookingEvent.DTO.CreateOrganisationDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "bookingEvent.Controllers.OrganisationController",
     "Method": "Update",
     "RelativePath": "api/Organisation/{id}",
     "HttpMethod": "PUT",
@@ -415,6 +399,27 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "bookingEvent.Controllers.OrganisationController",
+    "Method": "Create",
+    "RelativePath": "api/Organisation/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "bookingEvent.DTO.CreateOrganisationDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
         "Type": "System.Guid",
         "IsRequired": true
       }

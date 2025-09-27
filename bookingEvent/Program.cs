@@ -99,8 +99,8 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false, // bật true nếu bạn có issuer riêng
-        ValidateAudience = false, // bật true nếu bạn có audience riêng
+        ValidateIssuer = false, // bật true nếu  có issuer riêng
+        ValidateAudience = false, // bật true nếu có audience riêng
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(

@@ -5,6 +5,7 @@ using bookingEvent.Model;
 using bookingEvent.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -83,6 +84,7 @@ namespace bookingEvent.Services.Auth
             {
                 UserName = username,
                 Email = email,
+                AvatarUrl = AppSettingNames.AvartarUrlDefault,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
             };
             var token = Guid.NewGuid().ToString();
@@ -106,46 +108,63 @@ namespace bookingEvent.Services.Auth
                 throw new InvalidOperationException("Đăng nhập bằng tài khoản nội bộ đã bị vô hiệu hóa.");
             }
 
-            var user = await _context.Users
-                .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                .Include(u => u.OrganisationUsers)
-                .FirstOrDefaultAsync(u => u.Email == email || u.UserName == email);
+            var user = await
+             (from us in _context.Users.AsNoTracking()
+              join uro in _context.UserRoles.AsNoTracking() on us.Id equals uro.UserId
+              join org in _context.OrganisationUser.AsNoTracking()
+                   on us.Id equals org.UserId into temp   // group join
+              from org in temp.DefaultIfEmpty()         // left join
+              where us.Email == email || us.UserName == email
+              select new 
+              {
+                  user = us,
+                  userRole = uro,
+                  org = org
+              })
+             .FirstOrDefaultAsync();
 
-            if (!user.EmailConfirmed)
+         
+            if (!user.user.EmailConfirmed)
                 throw new InvalidOperationException("Email chưa được xác thực. Vui lòng xác thực trước khi đăng nhập.");
 
-            if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow)
+
+            if (user.user.LockoutEnd.HasValue && user.user.LockoutEnd.Value > DateTimeOffset.UtcNow)
                 throw new InvalidOperationException("Tài khoản của bạn đã bị khóa. Vui lòng lòng thử lại sau.");
 
             if (user == null) return null;
-            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            if (!BCrypt.Net.BCrypt.Verify(password, user.user.PasswordHash))
             {
-                await HandleFailedLoginAsync(user);
+                await HandleFailedLoginAsync(user.user);
                 return null;
             }
 
-            var token = GenerateToken(user);
+            var token = GenerateToken(user.user);
 
             // cập nhật hạn token 7 ngày
-            user.AccessToken = token;
-            user.LoginAt = DateTime.UtcNow;
-            user.TokenExpireTime = DateTime.UtcNow.AddDays(7);
-            user.AccessFailedCount = 0;
+            user.user.AccessToken = token;
+            user.user.LoginAt = DateTime.UtcNow;
+            user.user.TokenExpireTime = DateTime.UtcNow.AddDays(7);
+            user.user.AccessFailedCount = 0;
             await _context.SaveChangesAsync();
+
+            var listRole = await _context.UserRoles
+               .Where(ur => ur.UserId == user.user.Id)
+               .Select(ur => ur.Role.Name)
+               .ToListAsync();
+            var listOrg = await _context.OrganisationUser.Where(o => o.UserId == user.user.Id).ToListAsync();
 
             return new LoginResponseDto
             {
                 Token = token,
-                UserId = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                FullName = user.FullName,
-                Phone = user.Phone,
-                AvatarUrl = user.AvatarUrl,
-                Expiry = user.TokenExpireTime.Value,
-                Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
-                OrganisationUsers = user.OrganisationUsers.ToList()
+                UserId = user.user.Id,
+                Email = user.user.Email,
+                UserName = user.user.UserName,
+                FullName = user.user.FullName,
+                Phone = user.user.Phone,
+                AvatarUrl = user.user.AvatarUrl,
+                Expiry = user.user.TokenExpireTime.Value,
+                Roles = listRole,
+                OrganisationUsers = listOrg
             };
         }
 

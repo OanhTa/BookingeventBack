@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using bookingEvent.Const;
 using bookingEvent.Data;
 using bookingEvent.DTO;
 using bookingEvent.Model;
@@ -22,12 +23,19 @@ namespace bookingEvent.Services
 
         public async Task<User> CreateUserAsync(CreateUserDto dto)
         {
+            var exists = await _context.Users.AnyAsync(u => u.UserName == dto.UserName);
+            if (exists)
+            {
+                throw new InvalidOperationException("Tên đăng nhập đã tồn tại.");
+            }
+
             var user = new User
             {
                 Id = Guid.NewGuid(),
                 UserName = dto.UserName,
                 FullName = dto.FullName,
                 Email = dto.Email,
+                AvatarUrl = AppSettingNames.AvartarUrlDefault,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash),
                 Phone = dto.Phone,
                 Address = dto.Address
@@ -67,12 +75,7 @@ namespace bookingEvent.Services
             user.Phone = dto.Phone;
             user.Address = dto.Address;
 
-            if (!string.IsNullOrEmpty(dto.PasswordHash))
-            {
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
-            }
-
-            // Xử lý Roles: clear cũ -> add mới
+            // Xử lý Roles: clear cũ ,add mới
             user.UserRoles.Clear();
             foreach (var roleId in dto.RoleIds)
             {

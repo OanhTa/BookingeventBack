@@ -17,12 +17,11 @@ namespace bookingEvent.Controllers
             _orgService = orgService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateOrganisationDto dto)
+        [HttpPost("{userId}")]
+        public async Task<IActionResult> Create([FromBody] CreateOrganisationDto dto, Guid userId)
         {
             try
             {
-                var userId = User.GetUserId();
                 var org = await _orgService.CreateOrganisationAsync(dto, userId);
                 return Ok(ApiResponse<object>.SuccessResponse(org, "Tạo tổ chức thành công", StatusCodes.Status201Created));
             }

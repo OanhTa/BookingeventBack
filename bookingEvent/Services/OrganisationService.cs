@@ -47,8 +47,24 @@ namespace bookingEvent.Services
                 UserId = userId,
                 RoleInOrg = OrganisationUserRole.Owner
             });
-
             await _context.SaveChangesAsync();
+
+            //var user = await _context.Users.FindAsync(userId);
+            //if (user != null)
+            //{
+            //    var subject = "Xác nhận tạo tổ chức mới";
+            //    var body = $@"
+            //        Xin chào {user.FullName},<br/><br/>
+            //        Bạn đã tạo thành công tổ chức <b>{organisation.Name}</b>.<br/>
+            //        Vui lòng xác nhận để kích hoạt tổ chức của bạn:<br/>
+            //        <a href='http://localhost:4200/confirm-organisation?orgId={organisation.Id}'>
+            //            Xác nhận tổ chức
+            //        </a><br/><br/>
+            //        Nếu bạn không thực hiện thao tác này, vui lòng bỏ qua email.
+            //    ";
+
+            //    await _emailService.SendEmailAsync(user.Email, subject, body);
+            //}
             return organisation;
         }
 
