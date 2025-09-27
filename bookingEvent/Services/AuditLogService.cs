@@ -29,7 +29,7 @@ namespace bookingEvent.Services
 
         public async Task<(List<AuditLog> Logs, int TotalCount)> GetPagedAsync(int page, int pageSize)
         {
-            var query = _context.AuditLog.OrderByDescending(x => x.ExecutionTime);
+            IQueryable<AuditLog> query = _context.AuditLog.OrderByDescending(x => x.ExecutionTime);
             var totalCount = await query.CountAsync();
             var logs = await query
                 .Skip((page - 1) * pageSize)//bỏ bản ghi

@@ -28,6 +28,11 @@ namespace bookingEvent.Services
             {
                 throw new InvalidOperationException("Tên đăng nhập đã tồn tại.");
             }
+            var existsEmail = await _context.Users.AnyAsync(u => u.Email == dto.Email);
+            if (existsEmail)
+            {
+                throw new InvalidOperationException("Email đã tồn tại.");
+            }
 
             var user = new User
             {
